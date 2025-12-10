@@ -28,7 +28,7 @@ services:
     container_name: aura_backend
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       PORT: 3000
       NODE_ENV: development
@@ -57,7 +57,7 @@ services:
     ports:
       - "5173:5173"
     environment:
-      VITE_API_BASE_URL: http://localhost:3000
+      VITE_API_BASE_URL: http://localhost:3001
     depends_on:
       - backend
     volumes:
