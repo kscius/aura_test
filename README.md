@@ -146,6 +146,22 @@ npm run dev
 
 The server will be available at `http://localhost:3000`
 
+### Run Tests
+
+From the `backend/` folder:
+
+```bash
+# Run all unit tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+The project includes representative unit tests for:
+- JWT utilities (token generation and validation)
+- Validation schemas (Zod schema testing)
+
 ### Run the Frontend
 
 From the `frontend/` folder:
@@ -475,12 +491,15 @@ Chose **React** for:
 
 ### Technical
 
-- [ ] **Unit tests** - Jest for backend and frontend
-- [ ] **Integration tests** - Supertest for API
+- [x] **Unit tests** - Basic Jest tests for JWT and validation *(Added: 2 test files)*
+- [ ] **Integration tests** - Supertest for API endpoints
 - [ ] **E2E tests** - Playwright or Cypress
+- [ ] **Expand test coverage** - Currently only representative examples
 - [ ] **CI/CD** - GitHub Actions
-- [ ] **Docker** - Containerization
-- [ ] **Rate limiting** - Prevent API abuse
+- [x] **Docker** - Complete Docker Compose setup *(Added)*
+- [ ] **Rate limiting** - Prevent brute force attacks *(See TODO in auth.service.ts)*
+- [ ] **Token refresh** - Improve UX *(See TODO in auth.middleware.ts)*
+- [ ] **Token blacklist** - Proper logout *(See TODO in auth.middleware.ts)*
 - [ ] **Logging** - Winston or Pino
 - [ ] **Monitoring** - Sentry for errors
 - [ ] **Migrations** - Database version control
@@ -488,6 +507,13 @@ Chose **React** for:
 - [ ] **Helmet.js** - Additional security headers
 - [ ] **Input sanitization** - Prevent XSS
 - [ ] **CSRF protection** - For cookies
+
+**Note:** Many future improvements are documented as inline TODOs in the codebase near the relevant code:
+- `backend/src/middleware/auth.middleware.ts` - Token refresh and blacklist
+- `backend/src/services/auth.service.ts` - Rate limiting, account lockout, audit logging
+- `backend/src/services/user.service.ts` - Pagination, search, RBAC
+- `frontend/src/api/client.ts` - Request retry, interceptors
+- `frontend/src/pages/Dashboard.tsx` - Shared validation schema
 
 ### UX/UI
 
@@ -500,21 +526,47 @@ Chose **React** for:
 
 ## 🧪 Testing
 
-Currently no tests implemented. To add them:
+The project includes basic unit tests to demonstrate testing practices:
 
-### Backend
+### Backend Tests
 
+**Current Coverage:**
+- ✅ JWT utilities (`jwt.test.ts`) - Token generation and validation
+- ✅ Validation schemas (`validation.test.ts`) - Zod schema testing
+
+**Run Tests:**
 ```bash
 cd backend
-npm install --save-dev jest @types/jest ts-jest supertest @types/supertest
+npm test                 # Run all tests
+npm run test:watch      # Watch mode
+npm run test:coverage   # With coverage report
 ```
 
-### Frontend
+**Test Configuration:**
+- Framework: Jest with ts-jest
+- Location: `backend/src/__tests__/`
+- Config: `backend/jest.config.js`
 
+### Future Testing Improvements
+
+To achieve comprehensive test coverage:
+
+**Backend:**
+```bash
+npm install --save-dev supertest @types/supertest
+```
+- Add integration tests for API endpoints
+- Test middleware behavior
+- Test service layer with mocked repositories
+
+**Frontend:**
 ```bash
 cd frontend
 npm install --save-dev vitest @testing-library/react @testing-library/jest-dom
 ```
+- Component unit tests
+- Form validation tests
+- E2E tests with Playwright or Cypress
 
 ## 🚢 Deployment
 

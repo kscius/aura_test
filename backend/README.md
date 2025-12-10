@@ -19,6 +19,9 @@ REST API for user management with JWT authentication, built with Node.js, Expres
 ```
 backend/
 ├── src/
+│   ├── __tests__/         # Unit tests
+│   │   ├── jwt.test.ts
+│   │   └── validation.test.ts
 │   ├── controllers/       # Route controllers
 │   │   ├── auth.controller.ts
 │   │   └── user.controller.ts
@@ -42,6 +45,7 @@ backend/
 │   │   └── auth.validation.ts
 │   ├── data-source.ts     # TypeORM configuration
 │   └── index.ts           # Entry point
+├── jest.config.js
 ├── package.json
 ├── tsconfig.json
 ├── env.example
@@ -113,6 +117,25 @@ npm run build
 # Run compiled code
 npm start
 ```
+
+### Running Tests
+
+```bash
+# Run all unit tests
+npm test
+
+# Run tests in watch mode (re-runs on file changes)
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+**Note:** The test suite includes representative unit tests for:
+- JWT token generation and validation (`jwt.test.ts`)
+- Zod schema validation logic (`validation.test.ts`)
+
+These tests demonstrate basic testing practices but are not exhaustive. In a production environment, you would want to add integration tests, E2E tests, and higher coverage.
 
 ## 📊 Database
 
