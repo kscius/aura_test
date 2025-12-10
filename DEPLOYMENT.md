@@ -332,76 +332,10 @@ https://aura-test-xxxxx.vercel.app
 
 ---
 
-## 3️⃣ Configure GitHub Actions (Automatic Deployments)
-
-### Step 1: Get Vercel Tokens
-
-1. Go to [vercel.com/account/tokens](https://vercel.com/account/tokens)
-2. Create a new token: **"GitHub Actions Deploy Token"**
-3. **Copy the token** (you won't see it again!)
-
-4. Install Vercel CLI locally:
-   ```bash
-   npm i -g vercel
-   ```
-
-5. Link your project:
-   ```bash
-   cd frontend
-   vercel link
-   ```
-
-6. Get your Vercel credentials:
-   ```bash
-   cat .vercel/project.json
-   ```
-   
-   Copy the `projectId` and `orgId`
-
-### Step 2: Get Railway Token
-
-1. Go to [railway.app/account/tokens](https://railway.app/account/tokens)
-2. Create a new token: **"GitHub Actions Deploy"**
-3. **Copy the token**
-
-### Step 3: Add GitHub Secrets
-
-Go to your GitHub repository → **Settings** → **Secrets and variables** → **Actions**
-
-Add these secrets:
-
-| Secret Name | Value | Where to get it |
-|-------------|-------|----------------|
-| `VERCEL_TOKEN` | `your_vercel_token` | Vercel account tokens |
-| `VERCEL_ORG_ID` | `team_xxx` or `user_xxx` | `.vercel/project.json` |
-| `VERCEL_PROJECT_ID` | `prj_xxx` | `.vercel/project.json` |
-| `RAILWAY_TOKEN` | `your_railway_token` | Railway account tokens |
-
-### Step 4: Test Automatic Deployment
-
-1. Make a small change to your code
-2. Commit and push to `main`:
-   ```bash
-   git add .
-   git commit -m "test: trigger automatic deployment"
-   git push origin main
-   ```
-
-3. Go to **Actions** tab in GitHub
-4. Watch your deployment workflow run!
-
-**Workflow will:**
-- ✅ Run tests
-- ✅ Deploy frontend to Vercel
-- ✅ Deploy backend to Railway
-- ✅ Report status
-
----
-
-## 4️⃣ Update CORS in Backend (CRITICAL)
+## 3️⃣ Update CORS in Backend (CRITICAL)
 
 **Why you need this:**
-- Your frontend on Vercel needs permission to make requests to the backend on Railway
+- Your frontend (Vercel/Render) needs permission to make requests to the backend on Railway
 - Without CORS configured, the browser will block the requests
 
 ### Option 1: Configure via Environment Variable (RECOMMENDED)
@@ -413,13 +347,17 @@ Add these secrets:
 3. Click **"+ New Variable"**
 4. Add:
    - **Name:** `CORS_ORIGIN`
-   - **Value:** `https://your-app.vercel.app` (your actual Vercel URL)
+   - **Value:** Your frontend URL (Vercel or Render)
 5. Click **"Add"** or save
 6. Railway will re-deploy automatically (~2 mins)
 
-**Example:**
+**Examples:**
 ```env
+# If using Vercel:
 CORS_ORIGIN=https://aura-test-abc123.vercel.app
+
+# If using Render:
+CORS_ORIGIN=https://aura-test-frontend.onrender.com
 ```
 
 ### Option 2: Update the Code
@@ -459,7 +397,7 @@ git push origin main
 
 ---
 
-## 5️⃣ Verify Deployment
+## 4️⃣ Verify Deployment
 
 ### Test 1: Backend Health Check
 
@@ -580,25 +518,16 @@ graph LR
 **Problem:** API calls failing (CORS errors)
 
 **Solution:**
-1. Update `VITE_API_BASE_URL` in Vercel
+1. Update `VITE_API_BASE_URL` in your frontend hosting (Vercel/Render)
 2. Ensure Railway backend URL is correct
-3. Configure CORS in backend to allow Vercel domain
+3. Configure CORS in backend to allow your frontend domain
 
 **Problem:** Environment variable not working
 
 **Solution:**
-1. Vercel requires `VITE_` prefix for client-side variables
+1. Vite requires `VITE_` prefix for client-side variables
 2. Redeploy after adding/changing variables
-3. Check variable in Vercel Dashboard → Settings → Environment Variables
-
-### GitHub Actions Issues
-
-**Problem:** Deployment workflow failing
-
-**Solution:**
-1. Check **Actions** tab for error logs
-2. Verify all GitHub secrets are set correctly
-3. Ensure token permissions are correct
+3. Check variable in hosting dashboard (Vercel/Render) → Settings → Environment Variables
 
 ---
 
@@ -606,7 +535,7 @@ graph LR
 
 | Service | Free Tier | Estimated Cost |
 |---------|-----------|----------------|
-| Vercel | ✅ Unlimited | **$0/month** |
+| Vercel/Render | ✅ Free | **$0/month** |
 | Railway | $5 credit/month | **~$3-4/month** (with credit = ~$1-2 paid) |
 | **Total** | | **~$1-2/month** |
 
