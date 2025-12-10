@@ -1,63 +1,63 @@
-# Guía de Commits para AURA
+# Commit Guidelines for AURA
 
-Este documento describe la convención de commits utilizada en el proyecto AURA.
+This document describes the commit conventions used in the AURA project.
 
-## Formato de Commits
+## Commit Format
 
 ```
-<tipo>: <descripción breve>
+<type>: <brief description>
 
-[cuerpo opcional del commit con más detalles]
+[optional commit body with more details]
 
-[footer opcional]
+[optional footer]
 ```
 
-## Tipos de Commits
+## Commit Types
 
-### feat - Nueva Funcionalidad
-Cuando agregas una nueva característica o funcionalidad.
+### feat - New Feature
+When you add a new feature or functionality.
 
-**Ejemplos:**
+**Examples:**
 ```
 feat: add user authentication middleware
 feat: implement user profile update endpoint
 feat: create login page with form validation
 ```
 
-### fix - Corrección de Bugs
-Cuando corriges un error o bug.
+### fix - Bug Fix
+When you fix an error or bug.
 
-**Ejemplos:**
+**Examples:**
 ```
 fix: handle validation errors in user registration
 fix: prevent duplicate email registration
 fix: correct token expiration time
 ```
 
-### docs - Documentación
-Cuando modificas o agregas documentación.
+### docs - Documentation
+When you modify or add documentation.
 
-**Ejemplos:**
+**Examples:**
 ```
 docs: update API documentation for auth endpoints
 docs: add installation instructions to README
 docs: create architecture diagram
 ```
 
-### refactor - Refactorización
-Cuando cambias código sin alterar funcionalidad.
+### refactor - Refactoring
+When you change code without altering functionality.
 
-**Ejemplos:**
+**Examples:**
 ```
 refactor: extract database connection to separate module
 refactor: simplify auth service logic
 refactor: reorganize component structure
 ```
 
-### style - Estilos de Código
-Cambios que no afectan el significado del código (formato, espacios, etc.).
+### style - Code Style
+Changes that don't affect code meaning (formatting, spaces, etc.).
 
-**Ejemplos:**
+**Examples:**
 ```
 style: format code with prettier
 style: add consistent spacing
@@ -65,36 +65,36 @@ style: organize imports
 ```
 
 ### test - Tests
-Cuando agregas o modificas tests.
+When you add or modify tests.
 
-**Ejemplos:**
+**Examples:**
 ```
 test: add unit tests for auth service
 test: create integration tests for user endpoints
 test: add e2e tests for login flow
 ```
 
-### chore - Tareas de Mantenimiento
-Cambios en el proceso de build, dependencias, etc.
+### chore - Maintenance Tasks
+Changes to build process, dependencies, etc.
 
-**Ejemplos:**
+**Examples:**
 ```
 chore: update dependencies
 chore: configure TypeScript compiler options
 chore: add git ignore rules
 ```
 
-### perf - Mejoras de Performance
-Cuando optimizas el rendimiento.
+### perf - Performance Improvements
+When you optimize performance.
 
-**Ejemplos:**
+**Examples:**
 ```
 perf: add database indexes for email lookup
 perf: implement query caching
 perf: optimize bundle size
 ```
 
-## Ejemplos de Commits del Proyecto AURA
+## AURA Project Commit Examples
 
 ### Backend
 
@@ -145,9 +145,9 @@ chore: add environment variable templates
 chore: create automated setup scripts
 ```
 
-## Commits con Cuerpo Extendido
+## Commits with Extended Body
 
-Cuando el cambio requiere explicación adicional:
+When a change requires additional explanation:
 
 ```
 feat: implement refresh token mechanism
@@ -161,9 +161,9 @@ This allows users to stay logged in for longer periods
 without compromising security.
 ```
 
-## Commits con Breaking Changes
+## Commits with Breaking Changes
 
-Cuando haces cambios que rompen compatibilidad:
+When you make changes that break compatibility:
 
 ```
 feat: update user profile endpoint structure
@@ -177,15 +177,15 @@ Migration guide:
 - Use partial updates with PATCH instead
 ```
 
-## Buenas Prácticas
+## Best Practices
 
 ### ✅ DO
 
-- Usar tiempo presente imperativo ("add" no "added" o "adds")
-- Ser específico y descriptivo
-- Separar commits por funcionalidad
-- Referenciar issues cuando aplique (#123)
-- Mantener commits atómicos (una cosa a la vez)
+- Use present tense imperative ("add" not "added" or "adds")
+- Be specific and descriptive
+- Separate commits by functionality
+- Reference issues when applicable (#123)
+- Keep commits atomic (one thing at a time)
 
 ```
 feat: add email validation to registration form
@@ -195,9 +195,9 @@ docs: update README with database setup steps
 
 ### ❌ DON'T
 
-- Commits genéricos
-- Mezclar múltiples cambios no relacionados
-- Commits demasiado grandes
+- Generic commits
+- Mix multiple unrelated changes
+- Overly large commits
 
 ```
 ❌ update stuff
@@ -206,15 +206,15 @@ docs: update README with database setup steps
 ❌ feat: add login, register, dashboard, and API
 ```
 
-## Git Workflow Sugerido
+## Git Workflow Suggestion
 
-### Desarrollo de Nueva Funcionalidad
+### New Feature Development
 
 ```bash
-# Crear feature branch
+# Create feature branch
 git checkout -b feat/user-authentication
 
-# Hacer cambios y commits atómicos
+# Make changes and atomic commits
 git add src/middleware/auth.middleware.ts
 git commit -m "feat: create JWT verification middleware"
 
@@ -224,29 +224,29 @@ git commit -m "feat: add login and register controllers"
 git add src/routes/auth.routes.ts
 git commit -m "feat: configure auth routes"
 
-# Merge a main
+# Merge to main
 git checkout main
 git merge feat/user-authentication
 ```
 
-### Corrección de Bug
+### Bug Fix
 
 ```bash
-# Crear fix branch
+# Create fix branch
 git checkout -b fix/email-validation
 
-# Corregir y commit
+# Fix and commit
 git add src/validation/auth.validation.ts
 git commit -m "fix: improve email validation regex"
 
-# Test y merge
+# Test and merge
 git checkout main
 git merge fix/email-validation
 ```
 
-## Integración con Issues
+## Integration with Issues
 
-Referenciar issues en commits:
+Reference issues in commits:
 
 ```
 feat: add password reset functionality (#42)
@@ -256,17 +256,17 @@ docs: update API docs for new endpoints (ref #45)
 
 ## Semantic Versioning
 
-Los tipos de commit se mapean a versiones:
+Commit types map to versions:
 
 - `feat:` → MINOR version (1.0.0 → 1.1.0)
 - `fix:` → PATCH version (1.0.0 → 1.0.1)
 - `BREAKING CHANGE:` → MAJOR version (1.0.0 → 2.0.0)
 
-## Herramientas Recomendadas
+## Recommended Tools
 
 ### Commitlint
 
-Valida que los commits sigan la convención:
+Validates commits follow the convention:
 
 ```bash
 npm install --save-dev @commitlint/cli @commitlint/config-conventional
@@ -274,7 +274,7 @@ npm install --save-dev @commitlint/cli @commitlint/config-conventional
 
 ### Husky
 
-Git hooks para validar commits:
+Git hooks to validate commits:
 
 ```bash
 npm install --save-dev husky
@@ -284,34 +284,34 @@ npx husky add .husky/commit-msg 'npx --no -- commitlint --edit "$1"'
 
 ### Commitizen
 
-CLI interactivo para crear commits:
+Interactive CLI to create commits:
 
 ```bash
 npm install --save-dev commitizen cz-conventional-changelog
 ```
 
-Uso:
+Usage:
 ```bash
 git add .
-npm run commit  # En lugar de git commit
+npm run commit  # Instead of git commit
 ```
 
-## Resumen Rápido
+## Quick Summary
 
-| Tipo | Uso | Emoji (opcional) |
+| Type | Use | Emoji (optional) |
 |------|-----|------------------|
-| feat | Nueva funcionalidad | ✨ |
-| fix | Corrección de bug | 🐛 |
-| docs | Documentación | 📝 |
-| refactor | Refactorización | ♻️ |
-| style | Formato de código | 💄 |
+| feat | New feature | ✨ |
+| fix | Bug fix | 🐛 |
+| docs | Documentation | 📝 |
+| refactor | Refactoring | ♻️ |
+| style | Code formatting | 💄 |
 | test | Tests | ✅ |
-| chore | Mantenimiento | 🔧 |
+| chore | Maintenance | 🔧 |
 | perf | Performance | ⚡ |
 
-## Ejemplo Completo del Proyecto
+## Complete Project Example
 
-Historial de commits típico para AURA:
+Typical commit history for AURA:
 
 ```
 feat: ✨ initialize project structure
@@ -346,8 +346,7 @@ docs: 📝 add commit guidelines
 
 ---
 
-**Referencias:**
+**References:**
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Angular Commit Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md)
 - [Semantic Versioning](https://semver.org/)
-

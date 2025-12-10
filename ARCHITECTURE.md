@@ -1,10 +1,10 @@
-# Arquitectura del Proyecto AURA
+# AURA Project Architecture
 
-## Visión General
+## Overview
 
-AURA es una aplicación full-stack construida con una arquitectura cliente-servidor, donde el backend expone una API REST que el frontend consume para proporcionar una interfaz de usuario moderna e intuitiva.
+AURA is a full-stack application built with a client-server architecture, where the backend exposes a REST API that the frontend consumes to provide a modern and intuitive user interface.
 
-## Diagrama de Arquitectura
+## Architecture Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -75,9 +75,9 @@ AURA es una aplicación full-stack construida con una arquitectura cliente-servi
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Flujo de Datos
+## Data Flow
 
-### 1. Registro de Usuario
+### 1. User Registration
 
 ```
 User Input (Frontend)
@@ -143,7 +143,7 @@ User Input (Frontend)
             └─> Redirect to /dashboard
 ```
 
-### 3. Operaciones Protegidas
+### 3. Protected Operations
 
 ```
 User Action (Frontend)
@@ -172,121 +172,121 @@ User Action (Frontend)
     └─> Frontend receives and displays data
 ```
 
-## Patrones de Diseño Utilizados
+## Design Patterns Used
 
 ### Backend
 
-1. **Layered Architecture (Arquitectura en Capas)**
-   - **Controllers**: Manejan HTTP requests/responses
-   - **Services**: Contienen lógica de negocio
-   - **Repositories**: Acceso a datos (TypeORM)
-   - **Middleware**: Procesamiento de requests
-   - **Validation**: Validación de datos
+1. **Layered Architecture**
+   - **Controllers**: Handle HTTP requests/responses
+   - **Services**: Contain business logic
+   - **Repositories**: Data access (TypeORM)
+   - **Middleware**: Request processing
+   - **Validation**: Data validation
 
 2. **Dependency Injection**
-   - TypeORM repositories inyectados en services
-   - Services inyectados en controllers
+   - TypeORM repositories injected into services
+   - Services injected into controllers
 
 3. **Middleware Pattern**
-   - Auth middleware para protección de rutas
-   - Error middleware para manejo centralizado de errores
+   - Auth middleware for route protection
+   - Error middleware for centralized error handling
 
 4. **Repository Pattern**
-   - TypeORM abstrae el acceso a la base de datos
-   - Queries reutilizables y type-safe
+   - TypeORM abstracts database access
+   - Reusable and type-safe queries
 
 ### Frontend
 
 1. **Component-Based Architecture**
-   - Componentes reutilizables
-   - Separación de concerns (presentación vs lógica)
+   - Reusable components
+   - Separation of concerns (presentation vs logic)
 
 2. **Context Pattern**
-   - AuthContext para estado global de autenticación
-   - Evita prop drilling
+   - AuthContext for global authentication state
+   - Avoids prop drilling
 
 3. **Higher-Order Component (HOC)**
-   - ProtectedRoute para proteger rutas
+   - ProtectedRoute to protect routes
 
 4. **Service Layer**
-   - API client centralizado
-   - Separación de lógica de red
+   - Centralized API client
+   - Network logic separation
 
-## Principios SOLID Aplicados
+## SOLID Principles Applied
 
 ### S - Single Responsibility Principle
-- Cada módulo tiene una única responsabilidad
-- Controllers solo manejan HTTP
-- Services solo tienen lógica de negocio
-- Repositories solo acceden a datos
+- Each module has a single responsibility
+- Controllers only handle HTTP
+- Services only have business logic
+- Repositories only access data
 
 ### O - Open/Closed Principle
-- Middleware extensible sin modificar código existente
-- Nuevos endpoints se agregan sin cambiar los existentes
+- Extensible middleware without modifying existing code
+- New endpoints added without changing existing ones
 
 ### L - Liskov Substitution Principle
-- Interfaces consistentes en todos los servicios
-- Componentes React intercambiables
+- Consistent interfaces across all services
+- Interchangeable React components
 
 ### I - Interface Segregation Principle
-- TypeScript interfaces específicas para cada caso
-- No hay interfaces "gordas" con métodos innecesarios
+- Specific TypeScript interfaces for each case
+- No "fat" interfaces with unnecessary methods
 
 ### D - Dependency Inversion Principle
-- Dependencia de abstracciones (interfaces) no implementaciones
-- TypeORM DataSource inyectable
+- Dependency on abstractions (interfaces) not implementations
+- Injectable TypeORM DataSource
 
-## Seguridad
+## Security
 
-### Capas de Seguridad
+### Security Layers
 
-1. **Autenticación**
-   - JWT tokens firmados y con expiración
-   - Tokens verificados en cada petición protegida
+1. **Authentication**
+   - Signed JWT tokens with expiration
+   - Tokens verified on each protected request
 
-2. **Autorización**
-   - Middleware verifica permisos antes de acceder a recursos
-   - Usuarios solo pueden editar su propio perfil
+2. **Authorization**
+   - Middleware verifies permissions before accessing resources
+   - Users can only edit their own profile
 
-3. **Validación**
-   - Validación en cliente (UX)
-   - Validación en servidor (Seguridad) con Zod
+3. **Validation**
+   - Client-side validation (UX)
+   - Server-side validation (Security) with Zod
    - Never trust client input
 
-4. **Encriptación**
-   - Contraseñas hasheadas con bcrypt (10 rounds)
-   - Nunca se almacenan en texto plano
+4. **Encryption**
+   - Passwords hashed with bcrypt (10 rounds)
+   - Never stored in plain text
 
-5. **Prevención de Vulnerabilidades**
-   - **SQL Injection**: TypeORM usa consultas parametrizadas
-   - **XSS**: React escapa valores por defecto
-   - **CSRF**: JWT en header (no cookies)
-   - **Information Disclosure**: Mensajes de error genéricos
+5. **Vulnerability Prevention**
+   - **SQL Injection**: TypeORM uses parameterized queries
+   - **XSS**: React escapes values by default
+   - **CSRF**: JWT in header (not cookies)
+   - **Information Disclosure**: Generic error messages
 
-## Escalabilidad
+## Scalability
 
 ### Backend
 
 **Horizontal Scaling:**
-- Stateless API (JWT en lugar de sesiones)
-- Fácil agregar más instancias del servidor
-- Load balancer puede distribuir tráfico
+- Stateless API (JWT instead of sessions)
+- Easy to add more server instances
+- Load balancer can distribute traffic
 
 **Vertical Scaling:**
 - PostgreSQL connection pooling
-- Índices en columnas frecuentemente consultadas
+- Indexes on frequently queried columns
 
 **Future Improvements:**
-- Redis para caching
-- Queue system para operaciones asíncronas
-- Microservices para funcionalidades específicas
+- Redis for caching
+- Queue system for async operations
+- Microservices for specific functionalities
 
 ### Frontend
 
 **Performance:**
-- Code splitting con React Router
-- Lazy loading de componentes
-- Vite optimiza bundle size
+- Code splitting with React Router
+- Lazy loading of components
+- Vite optimizes bundle size
 
 **Caching:**
 - Service Workers (PWA)
@@ -294,91 +294,90 @@ User Action (Frontend)
 
 ## Testing Strategy
 
-### Backend (Recomendado)
+### Backend (Recommended)
 
 1. **Unit Tests**
-   - Services aislados
+   - Isolated services
    - Utilities (JWT, hash)
-   - Validación schemas
+   - Validation schemas
 
 2. **Integration Tests**
-   - Endpoints completos
+   - Complete endpoints
    - Database interactions
    - Middleware behavior
 
 3. **Coverage Target**
-   - Mínimo 80% coverage
-   - 100% en servicios críticos (auth)
+   - Minimum 80% coverage
+   - 100% on critical services (auth)
 
-### Frontend (Recomendado)
+### Frontend (Recommended)
 
 1. **Component Tests**
-   - Render correctamente
+   - Render correctly
    - Event handlers
    - Conditional rendering
 
 2. **Integration Tests**
-   - Flujos completos (login, registro)
+   - Complete flows (login, registration)
    - Protected routes
    - API integration
 
 3. **E2E Tests**
-   - User journeys completos
+   - Complete user journeys
    - Cross-browser testing
 
-## Monitoring y Observabilidad
+## Monitoring and Observability
 
-### Logs (Futuro)
+### Logs (Future)
 
-- Winston/Pino para logging estructurado
-- Niveles: error, warn, info, debug
-- Log rotation y storage
+- Winston/Pino for structured logging
+- Levels: error, warn, info, debug
+- Log rotation and storage
 
-### Metrics (Futuro)
+### Metrics (Future)
 
 - Request duration
 - Error rates
 - Active users
 - Database query performance
 
-### Error Tracking (Futuro)
+### Error Tracking (Future)
 
-- Sentry para frontend y backend
-- Stack traces completos
-- User context en errores
+- Sentry for frontend and backend
+- Complete stack traces
+- User context in errors
 
 ## Deployment Strategy
 
-### Desarrollo
+### Development
 
 - Backend: `npm run dev` (ts-node-dev)
 - Frontend: `npm run dev` (Vite)
-- Base de datos: PostgreSQL local
+- Database: Local PostgreSQL
 
 ### Staging
 
-- Backend: Docker container en Railway/Heroku
-- Frontend: Preview deployment en Vercel
-- Base de datos: Managed PostgreSQL
+- Backend: Docker container on Railway/Heroku
+- Frontend: Preview deployment on Vercel
+- Database: Managed PostgreSQL
 
-### Producción
+### Production
 
-- Backend: Multiple instances con load balancer
-- Frontend: CDN global (Vercel/Netlify)
-- Base de datos: High-availability PostgreSQL
+- Backend: Multiple instances with load balancer
+- Frontend: Global CDN (Vercel/Netlify)
+- Database: High-availability PostgreSQL
 - CI/CD: GitHub Actions
-- Rollback strategy documentada
+- Documented rollback strategy
 
-## Conclusión
+## Conclusion
 
-Esta arquitectura proporciona:
+This architecture provides:
 
-✅ **Separación de concerns** clara y mantenible
-✅ **Escalabilidad** horizontal y vertical
-✅ **Seguridad** en múltiples capas
-✅ **Testabilidad** con dependencias inyectables
-✅ **Type safety** con TypeScript end-to-end
-✅ **Developer Experience** con hot reload y tipos
+✅ **Clear and maintainable separation of concerns**
+✅ **Horizontal and vertical scalability**
+✅ **Security at multiple layers**
+✅ **Testability with injectable dependencies**
+✅ **Type safety with end-to-end TypeScript**
+✅ **Developer Experience with hot reload and types**
 
-La arquitectura está diseñada para evolucionar y escalar con las necesidades del negocio.
-
+The architecture is designed to evolve and scale with business needs.

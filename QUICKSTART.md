@@ -1,108 +1,108 @@
 # 🚀 Quick Start Guide - AURA
 
-Guía rápida para poner en marcha AURA en menos de 5 minutos.
+Quick guide to get AURA up and running in less than 5 minutes.
 
-## Prerrequisitos Instalados
+## Prerequisites Installed
 
 - ✅ Node.js v18+
 - ✅ PostgreSQL v14+
 - ✅ npm v9+
 
-## Setup en 4 Pasos
+## Setup in 4 Steps
 
-### 1️⃣ Configurar Base de Datos (1 min)
+### 1️⃣ Configure Database (1 min)
 
 ```bash
-# Abrir PostgreSQL
+# Open PostgreSQL
 psql -U postgres
 
-# Crear base de datos
+# Create database
 CREATE DATABASE aura_db;
 
-# Salir
+# Exit
 \q
 ```
 
-### 2️⃣ Configurar Backend (2 min)
+### 2️⃣ Configure Backend (2 min)
 
 ```bash
 cd backend
 
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Copiar archivo de environment
+# Copy environment file
 cp env.example .env
 
-# Editar .env con tus credenciales de PostgreSQL
-# Cambiar DB_PASSWORD por tu contraseña de PostgreSQL
+# Edit .env with your PostgreSQL credentials
+# Change DB_PASSWORD to your PostgreSQL password
 ```
 
-Contenido mínimo de `.env`:
+Minimum `.env` content:
 ```env
 PORT=3000
 NODE_ENV=development
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
-DB_PASSWORD=TU_CONTRASEÑA_AQUI
+DB_PASSWORD=YOUR_PASSWORD_HERE
 DB_NAME=aura_db
 JWT_SECRET=super_secret_key_123
 JWT_EXPIRES_IN=7d
 ```
 
 ```bash
-# Iniciar servidor backend
+# Start backend server
 npm run dev
 ```
 
-✅ Backend corriendo en `http://localhost:3000`
+✅ Backend running at `http://localhost:3000`
 
-### 3️⃣ Configurar Frontend (1 min)
+### 3️⃣ Configure Frontend (1 min)
 
-**En una nueva terminal:**
+**In a new terminal:**
 
 ```bash
 cd frontend
 
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Copiar archivo de environment
+# Copy environment file
 cp env.example .env
 
-# El .env debe contener:
+# The .env should contain:
 # VITE_API_BASE_URL=http://localhost:3000
 ```
 
 ```bash
-# Iniciar servidor frontend
+# Start frontend server
 npm run dev
 ```
 
-✅ Frontend corriendo en `http://localhost:5173`
+✅ Frontend running at `http://localhost:5173`
 
-### 4️⃣ Probar la Aplicación (1 min)
+### 4️⃣ Test the Application (1 min)
 
-1. Abrir navegador en `http://localhost:5173`
-2. Hacer clic en "Register here"
-3. Crear una cuenta con:
+1. Open browser at `http://localhost:5173`
+2. Click on "Register here"
+3. Create an account with:
    - Email: `test@example.com`
    - First Name: `Test`
    - Last Name: `User`
    - Password: `password123`
-4. Serás redirigido automáticamente al Dashboard
-5. ¡Listo! 🎉
+4. You'll be automatically redirected to the Dashboard
+5. Done! 🎉
 
-## Verificar que Todo Funciona
+## Verify Everything Works
 
-### Health Check Backend
+### Backend Health Check
 
 ```bash
 curl http://localhost:3000/health
 ```
 
-Respuesta esperada:
+Expected response:
 ```json
 {
   "status": "ok",
@@ -111,7 +111,7 @@ Respuesta esperada:
 }
 ```
 
-### Probar Registro via API
+### Test Registration via API
 
 ```bash
 curl -X POST http://localhost:3000/api/auth/register \
@@ -124,7 +124,7 @@ curl -X POST http://localhost:3000/api/auth/register \
   }'
 ```
 
-### Probar Login via API
+### Test Login via API
 
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
@@ -135,28 +135,28 @@ curl -X POST http://localhost:3000/api/auth/login \
   }'
 ```
 
-## Estructura de Carpetas
+## Folder Structure
 
 ```
 aurora_test/
-├── backend/          → API (Puerto 3000)
-├── frontend/         → Web App (Puerto 5173)
-├── notes/            → Documentación de requisitos
-├── README.md         → Documentación principal
-├── ARCHITECTURE.md   → Arquitectura del sistema
-└── QUICKSTART.md     → Esta guía
+├── backend/          → API (Port 3000)
+├── frontend/         → Web App (Port 5173)
+├── notes/            → Requirements documentation
+├── README.md         → Main documentation
+├── ARCHITECTURE.md   → System architecture
+└── QUICKSTART.md     → This guide
 ```
 
-## Comandos Útiles
+## Useful Commands
 
 ### Backend
 
 ```bash
 cd backend
 
-npm run dev          # Desarrollo con hot reload
-npm run build        # Compilar TypeScript
-npm start            # Ejecutar versión compilada
+npm run dev          # Development with hot reload
+npm run build        # Compile TypeScript
+npm start            # Run compiled version
 ```
 
 ### Frontend
@@ -164,18 +164,18 @@ npm start            # Ejecutar versión compilada
 ```bash
 cd frontend
 
-npm run dev          # Desarrollo con hot reload
-npm run build        # Build de producción
-npm run preview      # Preview del build
+npm run dev          # Development with hot reload
+npm run build        # Production build
+npm run preview      # Preview build
 ```
 
-## Troubleshooting Rápido
+## Quick Troubleshooting
 
 ### ❌ Error: "Database connection failed"
 
-**Problema:** PostgreSQL no está corriendo o credenciales incorrectas.
+**Problem:** PostgreSQL not running or incorrect credentials.
 
-**Solución:**
+**Solution:**
 ```bash
 # Windows
 net start postgresql-x64-14
@@ -187,60 +187,59 @@ brew services start postgresql
 sudo systemctl start postgresql
 ```
 
-Verificar credenciales en `backend/.env`
+Verify credentials in `backend/.env`
 
 ### ❌ Error: "Port 3000 already in use"
 
-**Problema:** El puerto ya está ocupado.
+**Problem:** Port is already occupied.
 
-**Solución:**
-Cambiar `PORT` en `backend/.env` a otro puerto (ej: 3001)
+**Solution:**
+Change `PORT` in `backend/.env` to another port (e.g., 3001)
 
-### ❌ Error: "Network Error" en el frontend
+### ❌ Error: "Network Error" in frontend
 
-**Problema:** Backend no está corriendo o URL incorrecta.
+**Problem:** Backend not running or incorrect URL.
 
-**Solución:**
-1. Verificar que backend esté corriendo
-2. Verificar `VITE_API_BASE_URL` en `frontend/.env`
+**Solution:**
+1. Verify backend is running
+2. Check `VITE_API_BASE_URL` in `frontend/.env`
 
-### ❌ Frontend muestra página en blanco
+### ❌ Frontend shows blank page
 
-**Problema:** Error de JavaScript en la consola.
+**Problem:** JavaScript error in console.
 
-**Solución:**
-1. Abrir DevTools (F12)
-2. Ver mensajes de error en Console
-3. Verificar que todas las dependencias estén instaladas
+**Solution:**
+1. Open DevTools (F12)
+2. Check error messages in Console
+3. Verify all dependencies are installed
 
-## Próximos Pasos
+## Next Steps
 
-1. ✅ Crear tu primera cuenta de usuario
-2. ✅ Explorar el Dashboard
-3. ✅ Editar tu perfil
-4. ✅ Ver la lista de usuarios
-5. 📖 Leer `README.md` para documentación completa
-6. 🏗️ Leer `ARCHITECTURE.md` para entender la arquitectura
-7. 🔌 Probar todos los endpoints de la API
+1. ✅ Create your first user account
+2. ✅ Explore the Dashboard
+3. ✅ Edit your profile
+4. ✅ View the users list
+5. 📖 Read `README.md` for complete documentation
+6. 🏗️ Read `ARCHITECTURE.md` to understand the architecture
+7. 🔌 Test all API endpoints
 
-## Recursos Adicionales
+## Additional Resources
 
-- **Documentación completa:** `README.md`
-- **Arquitectura:** `ARCHITECTURE.md`
+- **Complete documentation:** `README.md`
+- **Architecture:** `ARCHITECTURE.md`
 - **Backend README:** `backend/README.md`
 - **Frontend README:** `frontend/README.md`
-- **Requisitos del proyecto:** `Project.md`
+- **Project requirements:** `Project.md`
 
-## Soporte
+## Support
 
-Si encuentras algún problema:
+If you encounter any problems:
 
-1. Revisa esta guía de troubleshooting
-2. Consulta los README específicos de cada componente
-3. Verifica los logs en la terminal
-4. Abre las DevTools del navegador (F12)
+1. Review this troubleshooting guide
+2. Check component-specific READMEs
+3. Verify logs in the terminal
+4. Open browser DevTools (F12)
 
 ---
 
-**¡Disfruta construyendo con AURA!** 🚀
-
+**Enjoy building with AURA!** 🚀
