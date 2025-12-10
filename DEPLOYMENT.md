@@ -661,8 +661,40 @@ After deployment:
 
 ---
 
+## Alternative: Using Render for Frontend (Recommended)
+
+If you encounter issues with Vercel's environment variables or build process, **Render** is a reliable alternative:
+
+### Why Render?
+- ✅ More straightforward configuration
+- ✅ Free tier with no hidden issues
+- ✅ Better error messages
+- ✅ Auto-deploys from GitHub
+
+### Quick Render Setup:
+
+1. **Create account:** [render.com](https://render.com) → Sign in with GitHub
+2. **New Web Service:** Click "New +" → "Web Service" → Connect `aura_test`
+3. **Configure:**
+   - Name: `aura-test-frontend`
+   - Language: **Node**
+   - Branch: **main**
+   - Root Directory: `frontend` (NO leading slash)
+   - Build Command: `npm install && npx vite build`
+   - Start Command: `npx serve -s dist -l 10000`
+4. **Environment Variable:**
+   - Key: `VITE_API_BASE_URL`
+   - Value: `https://your-railway-backend-url.up.railway.app`
+5. **Instance Type:** Select **Free**
+6. **Deploy!**
+
+**Your URL:** `https://aura-test-frontend.onrender.com`
+
+---
+
 **Need Help?**
 
 - Railway Discord: [discord.gg/railway](https://discord.gg/railway)
 - Vercel Support: [vercel.com/support](https://vercel.com/support)
+- Render Community: [community.render.com](https://community.render.com)
 
