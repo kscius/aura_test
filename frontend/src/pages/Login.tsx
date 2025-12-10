@@ -5,14 +5,15 @@ import { ApiError } from "../api/client";
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login, user } = useAuth();
+  const { login, user, isLoading: isAuthLoading } = useAuth();
 
   // Redirect to dashboard if already authenticated
+  // Wait for auth check to complete before redirecting
   useEffect(() => {
-    if (user) {
+    if (!isAuthLoading && user) {
       navigate("/dashboard", { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, isAuthLoading, navigate]);
 
   const [formData, setFormData] = useState({
     email: "",
