@@ -28,71 +28,173 @@ Complete guide to deploy AURA to production using Vercel (frontend) and Railway 
 2. Sign up with GitHub
 3. You'll get **$5 in credits per month**
 
-### Step 2: Create New Project
+### Step 2: Create New Project - EMPTY Project First
+
+**IMPORTANTE:** Vamos a crear el proyecto vacío primero, luego configurarlo.
 
 1. Click **"New Project"**
-2. Select **"Deploy from GitHub repo"**
-3. Choose **`aura_test`** repository
-4. Railway will detect your backend automatically
+2. **NO selecciones "Deploy from GitHub repo" todavía**
+3. En su lugar, selecciona **"Empty Project"** (o solo cierra el diálogo)
+4. Ahora tienes un proyecto vacío llamado algo como "project-abc123"
 
-### Step 3: Add PostgreSQL Database
+### Step 3: Add PostgreSQL Database FIRST
 
-1. In your Railway project, click **"+ New"**
-2. Select **"Database"** → **"PostgreSQL"**
-3. Railway will automatically create and link the database
+**Antes de agregar el backend, agregamos la base de datos:**
 
-### Step 4: Configure Environment Variables
+1. Dentro de tu proyecto vacío, verás un botón **"+ New"** (arriba a la derecha)
+2. Click **"+ New"**
+3. Selecciona **"Database"**
+4. Selecciona **"Add PostgreSQL"**
+5. Railway creará un servicio de PostgreSQL
+6. Espera ~30 segundos a que se inicie (verás un indicador verde cuando esté listo)
 
-In Railway project settings, add these variables:
+**Ahora deberías ver un servicio "Postgres" en tu proyecto.**
+
+### Step 4: Add Backend Service
+
+**Ahora sí agregamos el código del backend:**
+
+1. Click **"+ New"** de nuevo
+2. Esta vez selecciona **"GitHub Repo"**
+3. Si es tu primera vez:
+   - Click **"Configure GitHub App"**
+   - Autoriza Railway a acceder a tus repos
+   - Selecciona el repositorio **`aura_test`**
+4. Railway te mostrará el repositorio
+5. **IMPORTANTE:** Click en **"Add variables"** o **"Deploy"** (Railway detectará que es un monorepo)
+
+### Step 5: Configure Root Directory (CRÍTICO)
+
+**Railway necesita saber que el backend está en una subcarpeta:**
+
+1. En el servicio del backend que acabas de crear, click en él para abrirlo
+2. Ve a la pestaña **"Settings"** (⚙️ icono arriba)
+3. Busca la sección **"Build"** o **"Service"**
+4. Encuentra **"Root Directory"** o **"Source"**
+5. Cambia el valor de `/` a: **`backend`**
+6. Click **"Save"** o los cambios se guardan automáticamente
+
+**Esto le dice a Railway que el código está en la carpeta `backend/`**
+
+### Step 6: Configure Build & Start Commands
+
+**Ahora configuramos cómo Railway debe construir y ejecutar tu app:**
+
+Aún en **Settings**, busca estas secciones:
+
+**Build Command:**
+1. Busca **"Build Command"** (puede estar en la sección "Build")
+2. Puede estar vacío o tener algo como `npm install`
+3. Cámbialo a: `npm ci && npm run build`
+4. Esto instalará dependencias y compilará TypeScript
+
+**Start Command:**
+1. Busca **"Start Command"** (puede estar en la sección "Deploy")
+2. Puede estar vacío o tener algo como `npm start`
+3. Asegúrate que diga: `npm start`
+4. Esto ejecutará el backend compilado
+
+**Install Command (opcional):**
+- Si ves "Install Command", déjalo en `npm install` o vacío (Railway lo hace automáticamente)
+
+### Step 7: Configure Environment Variables
+
+**Ahora configuramos las variables de entorno:**
+
+1. Aún en el servicio backend, ve a la pestaña **"Variables"** (📝 icono arriba)
+2. Verás una lista vacía o con algunas variables auto-generadas
+3. Click **"+ New Variable"** o **"Raw Editor"** para agregar múltiples a la vez
+
+**Si usas Raw Editor, pega esto:**
 
 ```env
-# Server Configuration
 PORT=3000
 NODE_ENV=production
-
-# Database (Railway auto-provides these, but verify)
 DB_HOST=${{Postgres.PGHOST}}
 DB_PORT=${{Postgres.PGPORT}}
 DB_USERNAME=${{Postgres.PGUSER}}
 DB_PASSWORD=${{Postgres.PGPASSWORD}}
 DB_NAME=${{Postgres.PGDATABASE}}
-
-# JWT Configuration (CHANGE THESE!)
-JWT_SECRET=your_production_jwt_secret_min_32_characters_long_random_string
+JWT_SECRET=CAMBIA_ESTO_POR_UN_SECRET_SEGURO_GENERADO
 JWT_EXPIRES_IN=7d
 ```
 
-**🔒 IMPORTANT:** Generate a strong JWT_SECRET:
+**Si agregas una por una, crea estas variables:**
+
+| Variable | Valor |
+|----------|-------|
+| `PORT` | `3000` |
+| `NODE_ENV` | `production` |
+| `DB_HOST` | `${{Postgres.PGHOST}}` |
+| `DB_PORT` | `${{Postgres.PGPORT}}` |
+| `DB_USERNAME` | `${{Postgres.PGUSER}}` |
+| `DB_PASSWORD` | `${{Postgres.PGPASSWORD}}` |
+| `DB_NAME` | `${{Postgres.PGDATABASE}}` |
+| `JWT_SECRET` | (genera uno seguro - ver abajo) |
+| `JWT_EXPIRES_IN` | `7d` |
+
+**Para JWT_SECRET, genera uno así:**
 ```bash
+# En terminal/PowerShell:
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-### Step 5: Configure Build Settings
+**NOTA:** Las variables `${{Postgres.XXX}}` son referencias al servicio PostgreSQL que creamos. Railway las resolverá automáticamente.
 
-Railway should auto-detect, but verify:
+### Step 8: Configure Health Check
 
-- **Build Command:** `cd backend && npm ci && npm run build`
-- **Start Command:** `cd backend && npm start`
-- **Root Directory:** `/` (project root)
+**Railway puede verificar que tu app esté funcionando:**
 
-### Step 6: Enable Health Checks
+1. En **Settings** del servicio backend
+2. Busca la sección **"Health Check"** o **"Healthcheck"**
+3. Si no existe, es opcional (Railway igual funcionará)
+4. Si existe, configura:
+   - **Health Check Path:** `/health`
+   - **Timeout:** `10` seconds
+   - **Interval:** `30` seconds
 
-1. Go to **Settings** → **Health Check**
-2. Set **Health Check Path:** `/health`
-3. Set **Health Check Timeout:** `10 seconds`
-4. Set **Health Check Interval:** `30 seconds`
+### Step 9: Deploy!
 
-### Step 7: Deploy
+**Ahora sí, ¡a hacer deploy!:**
 
-1. Click **"Deploy"**
-2. Wait for build to complete (~2-3 minutes)
-3. Your backend will be available at: `https://your-backend.up.railway.app`
+1. **OPCIÓN A:** Click el botón **"Deploy"** (si lo ves arriba a la derecha)
+2. **OPCIÓN B:** Ve a la pestaña **"Deployments"** y click **"Deploy"**
+3. **OPCIÓN C:** Railway puede auto-deployar si ya guardaste todo
 
-### Step 8: Get Your Backend URL
+**Verás logs en tiempo real:**
+- Instalando dependencias...
+- Building...
+- Starting...
+- ✅ Success!
 
-1. Go to **Settings** → **Domains**
-2. Copy the generated Railway domain
-3. **Save this URL** - you'll need it for Vercel!
+**El deploy toma ~2-4 minutos la primera vez.**
+
+### Step 10: Verificar Deployment
+
+**Cuando termine, verifica que funcionó:**
+
+1. Ve a **Settings** → **Networking** o **Domains**
+2. Verás algo como: `backend-production-abc123.up.railway.app`
+3. Click en el link o cópialo
+4. Agrégale `/health` al final: `https://tu-url.up.railway.app/health`
+5. Deberías ver:
+   ```json
+   {
+     "status": "ok",
+     "message": "AURA API is running",
+     "timestamp": "2024-..."
+   }
+   ```
+
+### Step 11: Guardar Backend URL
+
+**MUY IMPORTANTE - Guarda esta URL:**
+
+```
+https://tu-backend-production-xyz.up.railway.app
+```
+
+**La necesitarás para configurar Vercel en el siguiente paso!**
 
 ---
 
@@ -100,48 +202,133 @@ Railway should auto-detect, but verify:
 
 ### Step 1: Create Vercel Account
 
-1. Go to [vercel.com](https://vercel.com)
-2. Sign up with GitHub (free tier)
+1. Abre [vercel.com](https://vercel.com)
+2. Click **"Sign Up"** (arriba a la derecha)
+3. Selecciona **"Continue with GitHub"**
+4. Autoriza Vercel a acceder a tu cuenta de GitHub
+5. Completa tu perfil si te lo pide
 
-### Step 2: Import Project
+**Ahora estás en el dashboard de Vercel.**
 
-1. Click **"Add New..."** → **"Project"**
-2. Import **`aura_test`** from GitHub
-3. Vercel will auto-detect it's a Vite app
+### Step 2: Import Project from GitHub
 
-### Step 3: Configure Build Settings
+1. En el dashboard, busca el botón **"Add New..."** (arriba a la derecha)
+2. Click **"Add New..."** → **"Project"**
+3. Verás una lista de tus repositorios de GitHub
+4. **Si no ves `aura_test`:**
+   - Click **"Adjust GitHub App Permissions"** o **"Configure GitHub App"**
+   - Selecciona tu usuario/organización
+   - Da acceso al repositorio `aura_test`
+   - Regresa a Vercel
+5. Ahora deberías ver **`aura_test`** en la lista
+6. Click el botón **"Import"** al lado de `aura_test`
 
-**Framework Preset:** Vite
+### Step 3: Configure Project Settings
 
-**Root Directory:** `frontend`
+**Vercel te mostrará una pantalla de configuración. Aquí es CRÍTICO configurar bien:**
 
-**Build Command:** `npm run build`
+**📁 Root Directory (MUY IMPORTANTE):**
+1. Verás un campo **"Root Directory"** con un botón **"Edit"**
+2. Click **"Edit"**
+3. Se abrirá un explorador de carpetas
+4. Selecciona **`frontend`** (la carpeta, no el archivo)
+5. Click **"Continue"** o ✓
 
-**Output Directory:** `dist`
+**🔧 Framework Preset:**
+- Vercel debería auto-detectar **"Vite"**
+- Si no, selecciona **"Vite"** del dropdown
 
-**Install Command:** `npm install`
+**⚙️ Build and Output Settings:**
 
-### Step 4: Configure Environment Variables
+Vercel usualmente los detecta automáticamente, pero verifica:
 
-Add this environment variable:
+- **Build Command:** `npm run build` ✅ (debe estar así)
+- **Output Directory:** `dist` ✅ (debe estar así)
+- **Install Command:** `npm install` ✅ (puede estar vacío, está bien)
 
-| Name | Value |
-|------|-------|
-| `VITE_API_BASE_URL` | `https://your-backend.up.railway.app` |
+**Si están correctos, NO los cambies. Si están vacíos o incorrectos:**
 
-**⚠️ Use your actual Railway backend URL from Step 1!**
+1. Click **"Override"** en cada sección
+2. Ingresa los valores correctos:
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
 
-### Step 5: Deploy
+### Step 4: Add Environment Variables
 
-1. Click **"Deploy"**
-2. Wait for build (~1-2 minutes)
-3. Your frontend will be at: `https://your-app.vercel.app`
+**CRÍTICO - Aquí conectamos el frontend con el backend de Railway:**
 
-### Step 6: Configure Custom Domain (Optional)
+1. En la misma pantalla de configuración, busca la sección **"Environment Variables"**
+2. Verás campos para agregar variables
+3. Agrega esta variable:
 
-1. Go to **Settings** → **Domains**
-2. Add your custom domain
-3. Configure DNS records as instructed
+| Name (Nombre) | Value (Valor) |
+|---------------|---------------|
+| `VITE_API_BASE_URL` | `https://tu-backend-railway.up.railway.app` |
+
+**⚠️ IMPORTANTE:**
+- Usa la URL que guardaste del Step 11 de Railway
+- **SIN** `/health` al final
+- **SIN** barra diagonal `/` al final
+- Ejemplo correcto: `https://backend-production-abc123.up.railway.app`
+
+**Para agregar la variable:**
+- Escribe `VITE_API_BASE_URL` en el campo "Key" o "Name"
+- Pega tu URL de Railway en el campo "Value"
+- Click el botón **"Add"** (si hay)
+
+### Step 5: Deploy!
+
+**Ahora sí, desplegamos:**
+
+1. Revisa que todo esté correcto:
+   - ✅ Root Directory: `frontend`
+   - ✅ Framework: Vite
+   - ✅ Environment Variable: `VITE_API_BASE_URL` con tu URL de Railway
+2. Click el botón grande **"Deploy"** (abajo)
+3. Vercel comenzará el deployment
+
+**Verás una pantalla con logs en vivo:**
+- Building... (instalando dependencias)
+- Compiling... (construyendo el proyecto)
+- ✅ Success! (o similar)
+
+**El primer deploy toma ~1-3 minutos.**
+
+### Step 6: Ver tu App Desplegada
+
+**Cuando termine, verás una pantalla de celebración 🎉:**
+
+1. Vercel te mostrará tu URL: `https://aura-test-xxxxx.vercel.app`
+2. Click el botón **"Visit"** o en la imagen de preview
+3. ¡Tu frontend debería estar en vivo!
+
+**Si ves la página pero no puedes hacer login/register:**
+- Es normal, falta un paso más (configurar CORS en Railway)
+- Continúa al siguiente paso
+
+### Step 7: Copiar URL de Vercel
+
+**Guarda tu URL de Vercel para el siguiente paso:**
+
+```
+https://aura-test-xxxxx.vercel.app
+```
+
+**Donde encontrarla:**
+- En la pantalla de celebración después del deploy
+- O ve a tu proyecto → **"Deployments"** → Click en el último → Copia la URL
+- O en **"Settings"** → **"Domains"**
+
+### Step 8: Configurar Custom Domain (Opcional)
+
+**Si tienes un dominio propio:**
+
+1. Ve a **"Settings"** → **"Domains"**
+2. Click **"Add"**
+3. Escribe tu dominio: `tuapp.com`
+4. Vercel te dará instrucciones de DNS
+5. Agrega los registros en tu proveedor de dominio
+6. Espera ~10 minutos a que se propague
 
 ---
 
@@ -211,20 +398,37 @@ Add these secrets:
 
 ---
 
-## 4️⃣ Update CORS in Backend
+## 4️⃣ Update CORS in Backend (CRÍTICO)
 
-After deployment, update CORS to allow your Vercel frontend:
+**Por qué necesitas esto:**
+- Tu frontend en Vercel necesita permiso para hacer requests al backend en Railway
+- Sin CORS configurado, el navegador bloqueará las peticiones
 
-**Option 1: Using Railway Dashboard**
+### Opción 1: Configurar por Variable de Entorno (RECOMENDADO)
 
-Add environment variable:
+**Es la forma más fácil, sin tocar código:**
+
+1. Ve a Railway → tu proyecto → servicio **backend**
+2. Ve a la pestaña **"Variables"**
+3. Click **"+ New Variable"**
+4. Agrega:
+   - **Name:** `CORS_ORIGIN`
+   - **Value:** `https://tu-app.vercel.app` (tu URL real de Vercel)
+5. Click **"Add"** o guardar
+6. Railway re-desplegará automáticamente (~2 mins)
+
+**Ejemplo:**
 ```env
-CORS_ORIGIN=https://your-app.vercel.app
+CORS_ORIGIN=https://aura-test-abc123.vercel.app
 ```
 
-**Option 2: Update Code**
+### Opción 2: Actualizar el Código
 
-Edit `backend/src/index.ts`:
+**Si prefieres tener más control:**
+
+1. Abre `backend/src/index.ts` en tu editor
+2. Busca la línea `app.use(cors());`
+3. Reemplázala por:
 
 ```typescript
 app.use(cors({
@@ -233,39 +437,83 @@ app.use(cors({
 }));
 ```
 
-Then redeploy.
+4. Guarda el archivo
+5. Sube los cambios:
+
+```bash
+git add backend/src/index.ts
+git commit -m "feat(backend): configure CORS for production"
+git push origin main
+```
+
+6. Railway auto-desplegará (~2-3 mins)
+7. Luego agrega la variable `CORS_ORIGIN` en Railway como en Opción 1
+
+### Verificar que CORS está configurado
+
+1. Abre tu app en Vercel
+2. Abre DevTools (F12) → pestaña **"Console"**
+3. Intenta hacer login/register
+4. **✅ Si no hay errores de CORS:** ¡Funcionó!
+5. **❌ Si ves "CORS error":** Verifica que la URL sea exacta (sin `/` al final)
 
 ---
 
 ## 5️⃣ Verify Deployment
 
-### Test Backend
+### Test 1: Backend Health Check
 
-```bash
-curl https://your-backend.up.railway.app/health
-```
-
-Expected response:
+**En tu navegador:**
+1. Ve a: `https://tu-backend-railway.up.railway.app/health`
+2. Deberías ver:
 ```json
 {
   "status": "ok",
   "message": "AURA API is running",
-  "timestamp": "2024-01-01T00:00:00.000Z"
+  "timestamp": "2024-..."
 }
 ```
 
-### Test Frontend
+**✅ OK:** Backend funcionando | **❌ Error:** Revisa logs en Railway
 
-1. Visit `https://your-app.vercel.app`
-2. Register a new user
-3. Login
-4. View dashboard
+### Test 2: Frontend Carga
 
-### Test Full Integration
+1. Ve a: `https://tu-app.vercel.app`
+2. Deberías ver la página de Login/Register
+3. **✅ OK:** Frontend desplegado | **❌ 404:** Revisa Root Directory en Vercel
 
-1. Register → Should create user in Railway PostgreSQL
-2. Login → Should receive JWT token
-3. Dashboard → Should load profile and users list
+### Test 3: Registro (CRÍTICO - prueba la integración completa)
+
+1. En tu app, ve a **Register**
+2. Llena: email: `test@example.com`, nombre: `Test`, apellido: `User`, password: `test123`
+3. Click **Register**
+4. Abre DevTools (F12) → **Network** para ver requests
+
+**✅ ÉXITO:** Redirige a Dashboard, ves tu perfil
+**❌ ERROR:** Revisa tabla abajo
+
+| Síntoma | Solución |
+|---------|----------|
+| "Network Error" | CORS mal configurado (Step 4) |
+| "Failed to fetch" | Backend caído (logs Railway) |
+| Nada pasa | `VITE_API_BASE_URL` incorrecta en Vercel |
+
+### Test 4: Login
+
+1. Abre incógnito o cierra sesión
+2. Login con: `test@example.com` / `test123`
+3. **✅ Deberías:** Ver Dashboard
+
+### Test 5: Update Profile
+
+1. En Dashboard, edita tu nombre
+2. Click **Update**
+3. **✅ Deberías:** Ver cambios guardados
+
+### Test 6: Lista de Usuarios
+
+1. En Dashboard, sección **All Users**
+2. **✅ Deberías:** Ver tu usuario en la lista
 
 ---
 
