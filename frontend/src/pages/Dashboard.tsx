@@ -65,6 +65,9 @@ export const Dashboard: React.FC = () => {
     }
   };
 
+  // Client-side validation before sending update request
+  // This provides immediate feedback without a network round-trip
+  // TODO: Extract this validation into a shared schema to reuse it across multiple forms
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
 

@@ -80,6 +80,13 @@ export const updateUserProfile = async (
 
 /**
  * Gets the list of all users
+ * 
+ * Security note: We explicitly exclude passwordHash from the select to ensure
+ * it's never accidentally exposed in the API response.
+ * 
+ * TODO: Add pagination and filtering when the users list grows beyond a few hundred entries
+ * TODO: Implement search functionality (by name or email)
+ * TODO: Add role-based access control (only admins should see all users)
  */
 export const getAllUsers = async () => {
   const users = await userRepository.find({

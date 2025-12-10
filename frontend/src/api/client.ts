@@ -47,6 +47,17 @@ export const removeToken = (): void => {
 
 /**
  * Helper function to make HTTP requests
+ * 
+ * This function wraps the native fetch API with our base URL and auth token
+ * so all API calls share the same behavior and error handling logic.
+ * 
+ * Design decision: Centralized API client allows us to:
+ * - Automatically attach JWT to all requests
+ * - Handle errors consistently across the app
+ * - Easily add interceptors (logging, retry logic) in one place
+ * 
+ * TODO: Add request retry logic with exponential backoff for network failures
+ * TODO: Implement request/response interceptors for logging in development mode
  */
 const fetchApi = async <T>(
   endpoint: string,
@@ -59,7 +70,8 @@ const fetchApi = async <T>(
     ...options.headers,
   };
 
-  // Add authentication token if it exists
+  // Automatically attach JWT token to requests if user is authenticated
+  // This eliminates the need to manually add auth headers in every API call
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
@@ -72,6 +84,8 @@ const fetchApi = async <T>(
   const data = await response.json();
 
   if (!response.ok) {
+    // Convert all HTTP errors to our custom ApiError class
+    // This provides consistent error handling across all components
     throw new ApiError(
       response.status,
       data.error || "Error",
