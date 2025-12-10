@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME || "postgres",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_NAME || "aura_db",
-  synchronize: process.env.NODE_ENV === "development", // Solo en desarrollo
+  synchronize: process.env.NODE_ENV === "development", // Only in development
   logging: process.env.NODE_ENV === "development",
   entities: [User],
   migrations: ["src/migrations/**/*.ts"],

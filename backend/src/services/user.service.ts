@@ -5,7 +5,7 @@ import { UpdateProfileInput } from "../validation/auth.validation";
 const userRepository = AppDataSource.getRepository(User);
 
 /**
- * Obtiene el perfil de un usuario por ID
+ * Gets a user profile by ID
  */
 export const getUserProfile = async (userId: number) => {
   const user = await userRepository.findOne({
@@ -30,7 +30,7 @@ export const getUserProfile = async (userId: number) => {
 };
 
 /**
- * Actualiza el perfil de un usuario
+ * Updates a user profile
  */
 export const updateUserProfile = async (
   userId: number,
@@ -47,7 +47,7 @@ export const updateUserProfile = async (
     throw error;
   }
 
-  // Verificar si el nuevo email ya existe (si se está actualizando)
+  // Check if new email already exists (if being updated)
   if (data.email && data.email !== user.email) {
     const existingUser = await userRepository.findOne({
       where: { email: data.email },
@@ -61,7 +61,7 @@ export const updateUserProfile = async (
     }
   }
 
-  // Actualizar campos
+  // Update fields
   if (data.email) user.email = data.email;
   if (data.firstName) user.firstName = data.firstName;
   if (data.lastName) user.lastName = data.lastName;
@@ -79,7 +79,7 @@ export const updateUserProfile = async (
 };
 
 /**
- * Obtiene la lista de todos los usuarios
+ * Gets the list of all users
  */
 export const getAllUsers = async () => {
   const users = await userRepository.find({

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 
 /**
- * Middleware central de manejo de errores
+ * Central error handling middleware
  */
 export const errorMiddleware = (
   error: any,
@@ -12,7 +12,7 @@ export const errorMiddleware = (
 ): void => {
   console.error("Error:", error);
 
-  // Error de validación Zod
+  // Zod validation error
   if (error instanceof ZodError) {
     res.status(400).json({
       error: "ValidationError",
@@ -22,7 +22,7 @@ export const errorMiddleware = (
     return;
   }
 
-  // Error personalizado con status
+  // Custom error with status
   if (error.status) {
     res.status(error.status).json({
       error: error.name || "Error",
@@ -32,7 +32,7 @@ export const errorMiddleware = (
     return;
   }
 
-  // Error genérico
+  // Generic error
   res.status(500).json({
     error: "InternalServerError",
     message: process.env.NODE_ENV === "development" 

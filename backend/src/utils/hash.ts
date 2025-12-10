@@ -3,14 +3,14 @@ import bcrypt from "bcryptjs";
 const SALT_ROUNDS = 10;
 
 /**
- * Hashea una contraseña usando bcrypt
+ * Hashes a password using bcrypt
  */
 export const hashPassword = async (password: string): Promise<string> => {
   return await bcrypt.hash(password, SALT_ROUNDS);
 };
 
 /**
- * Compara una contraseña en texto plano con un hash
+ * Compares a plain text password with a hash
  */
 export const comparePassword = async (
   password: string,

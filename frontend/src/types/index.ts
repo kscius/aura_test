@@ -1,4 +1,4 @@
-// Tipos de datos para la aplicación
+// Data types for the application
 
 export interface User {
   id: number;

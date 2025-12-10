@@ -9,7 +9,7 @@ export interface JwtPayload {
 }
 
 /**
- * Genera un JWT token para un usuario
+ * Generates a JWT token for a user
  */
 export const generateToken = (payload: JwtPayload): string => {
   return jwt.sign(payload, JWT_SECRET, {
@@ -18,7 +18,7 @@ export const generateToken = (payload: JwtPayload): string => {
 };
 
 /**
- * Verifica y decodifica un JWT token
+ * Verifies and decodes a JWT token
  */
 export const verifyToken = (token: string): JwtPayload => {
   try {

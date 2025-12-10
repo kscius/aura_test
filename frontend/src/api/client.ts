@@ -10,7 +10,7 @@ import type {
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 
 /**
- * Clase para manejar errores de la API
+ * Class to handle API errors
  */
 export class ApiError extends Error {
   constructor(
@@ -25,28 +25,28 @@ export class ApiError extends Error {
 }
 
 /**
- * Obtiene el token JWT del localStorage
+ * Gets the JWT token from localStorage
  */
 const getToken = (): string | null => {
   return localStorage.getItem("auth_token");
 };
 
 /**
- * Guarda el token JWT en localStorage
+ * Saves the JWT token to localStorage
  */
 export const saveToken = (token: string): void => {
   localStorage.setItem("auth_token", token);
 };
 
 /**
- * Elimina el token JWT del localStorage
+ * Removes the JWT token from localStorage
  */
 export const removeToken = (): void => {
   localStorage.removeItem("auth_token");
 };
 
 /**
- * Función helper para hacer peticiones HTTP
+ * Helper function to make HTTP requests
  */
 const fetchApi = async <T>(
   endpoint: string,
@@ -59,7 +59,7 @@ const fetchApi = async <T>(
     ...options.headers,
   };
 
-  // Agregar token de autenticación si existe
+  // Add authentication token if it exists
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
@@ -84,7 +84,7 @@ const fetchApi = async <T>(
 };
 
 /**
- * Registra un nuevo usuario
+ * Registers a new user
  */
 export const registerUser = async (data: RegisterData): Promise<AuthResponse> => {
   return fetchApi<AuthResponse>("/api/auth/register", {
@@ -94,7 +94,7 @@ export const registerUser = async (data: RegisterData): Promise<AuthResponse> =>
 };
 
 /**
- * Inicia sesión con email y contraseña
+ * Logs in with email and password
  */
 export const loginUser = async (data: LoginData): Promise<AuthResponse> => {
   return fetchApi<AuthResponse>("/api/auth/login", {
@@ -104,14 +104,14 @@ export const loginUser = async (data: LoginData): Promise<AuthResponse> => {
 };
 
 /**
- * Obtiene el perfil del usuario autenticado
+ * Gets the authenticated user's profile
  */
 export const getProfile = async (): Promise<UserResponse> => {
   return fetchApi<UserResponse>("/api/users/profile");
 };
 
 /**
- * Actualiza el perfil del usuario autenticado
+ * Updates the authenticated user's profile
  */
 export const updateProfile = async (data: UpdateProfileData): Promise<UserResponse> => {
   return fetchApi<UserResponse>("/api/users/profile", {
@@ -121,7 +121,7 @@ export const updateProfile = async (data: UpdateProfileData): Promise<UserRespon
 };
 
 /**
- * Obtiene la lista de todos los usuarios
+ * Gets the list of all users
  */
 export const getUsers = async (): Promise<UsersListResponse> => {
   return fetchApi<UsersListResponse>("/api/users");

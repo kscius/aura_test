@@ -7,10 +7,10 @@ import { RegisterInput, LoginInput } from "../validation/auth.validation";
 const userRepository = AppDataSource.getRepository(User);
 
 /**
- * Registra un nuevo usuario
+ * Registers a new user
  */
 export const registerUser = async (data: RegisterInput) => {
-  // Verificar si el email ya existe
+  // Check if email already exists
   const existingUser = await userRepository.findOne({
     where: { email: data.email },
   });
@@ -22,7 +22,7 @@ export const registerUser = async (data: RegisterInput) => {
     throw error;
   }
 
-  // Crear nuevo usuario
+  // Create new user
   const passwordHash = await hashPassword(data.password);
   const user = userRepository.create({
     email: data.email,
@@ -33,7 +33,7 @@ export const registerUser = async (data: RegisterInput) => {
 
   await userRepository.save(user);
 
-  // Generar token
+  // Generate token
   const token = generateToken({ id: user.id, email: user.email });
 
   return {
@@ -50,7 +50,7 @@ export const registerUser = async (data: RegisterInput) => {
 };
 
 /**
- * Autentica un usuario
+ * Authenticates a user
  */
 export const loginUser = async (data: LoginInput) => {
   const user = await userRepository.findOne({
@@ -73,7 +73,7 @@ export const loginUser = async (data: LoginInput) => {
     throw error;
   }
 
-  // Generar token
+  // Generate token
   const token = generateToken({ id: user.id, email: user.email });
 
   return {

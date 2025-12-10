@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * Schema de validación para registro de usuario
+ * Validation schema for user registration
  */
 export const registerSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -11,7 +11,7 @@ export const registerSchema = z.object({
 });
 
 /**
- * Schema de validación para login
+ * Validation schema for login
  */
 export const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -19,7 +19,7 @@ export const loginSchema = z.object({
 });
 
 /**
- * Schema de validación para actualización de perfil
+ * Validation schema for profile update
  */
 export const updateProfileSchema = z.object({
   email: z.string().email("Invalid email format").optional(),

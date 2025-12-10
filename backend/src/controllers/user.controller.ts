@@ -7,7 +7,7 @@ import {
 import { updateProfileSchema } from "../validation/auth.validation";
 
 /**
- * Controlador para obtener el perfil del usuario autenticado
+ * Controller to get the authenticated user's profile
  * GET /api/users/profile
  */
 export const getProfile = async (
@@ -33,7 +33,7 @@ export const getProfile = async (
 };
 
 /**
- * Controlador para actualizar el perfil del usuario autenticado
+ * Controller to update the authenticated user's profile
  * PUT /api/users/profile
  */
 export const updateProfile = async (
@@ -47,10 +47,10 @@ export const updateProfile = async (
       return;
     }
 
-    // Validar datos de entrada
+    // Validate input data
     const validatedData = updateProfileSchema.parse(req.body);
 
-    // Actualizar perfil
+    // Update profile
     const updatedProfile = await updateUserProfile(req.user.id, validatedData);
 
     res.status(200).json({
@@ -63,7 +63,7 @@ export const updateProfile = async (
 };
 
 /**
- * Controlador para obtener la lista de todos los usuarios
+ * Controller to get the list of all users
  * GET /api/users
  */
 export const listUsers = async (

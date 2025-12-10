@@ -19,7 +19,7 @@ export const Dashboard: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Cargar lista de usuarios al montar el componente
+  // Load users list when component mounts
   useEffect(() => {
     loadUsers();
   }, []);
@@ -93,7 +93,7 @@ export const Dashboard: React.FC = () => {
 
     if (!validate()) return;
 
-    // Verificar si hubo cambios
+    // Check if there were changes
     const hasChanges =
       editFormData.email !== user?.email ||
       editFormData.firstName !== user?.firstName ||
@@ -119,7 +119,7 @@ export const Dashboard: React.FC = () => {
       setSuccessMessage("Profile updated successfully!");
       setIsEditing(false);
       
-      // Recargar lista de usuarios para reflejar cambios
+      // Reload users list to reflect changes
       loadUsers();
     } catch (error) {
       if (error instanceof ApiError) {

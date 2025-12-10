@@ -3,7 +3,7 @@ import { registerUser, loginUser } from "../services/auth.service";
 import { registerSchema, loginSchema } from "../validation/auth.validation";
 
 /**
- * Controlador para registro de usuario
+ * Controller for user registration
  * POST /api/auth/register
  */
 export const register = async (
@@ -12,10 +12,10 @@ export const register = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    // Validar datos de entrada
+    // Validate input data
     const validatedData = registerSchema.parse(req.body);
 
-    // Registrar usuario
+    // Register user
     const result = await registerUser(validatedData);
 
     res.status(201).json({
@@ -28,7 +28,7 @@ export const register = async (
 };
 
 /**
- * Controlador para login de usuario
+ * Controller for user login
  * POST /api/auth/login
  */
 export const login = async (
@@ -37,10 +37,10 @@ export const login = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    // Validar datos de entrada
+    // Validate input data
     const validatedData = loginSchema.parse(req.body);
 
-    // Autenticar usuario
+    // Authenticate user
     const result = await loginUser(validatedData);
 
     res.status(200).json({

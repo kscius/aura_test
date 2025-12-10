@@ -14,24 +14,24 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**
- * Provider del contexto de autenticación
+ * Authentication context provider
  */
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Verificar si hay un token guardado al cargar la app
+  // Check if there's a saved token when loading the app
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem("auth_token");
       
       if (token) {
         try {
-          // Obtener perfil del usuario
+          // Get user profile
           const response = await api.getProfile();
           setUser(response.data);
         } catch (error) {
-          // Si el token es inválido, eliminarlo
+          // If token is invalid, remove it
           api.removeToken();
         }
       }
@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   /**
-   * Inicia sesión
+   * Logs in
    */
   const login = async (credentials: LoginData) => {
     const response = await api.loginUser(credentials);
@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   /**
-   * Registra un nuevo usuario
+   * Registers a new user
    */
   const register = async (data: RegisterData) => {
     const response = await api.registerUser(data);
@@ -61,7 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   /**
-   * Cierra sesión
+   * Logs out
    */
   const logout = () => {
     api.removeToken();
@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   /**
-   * Actualiza los datos del usuario en el contexto
+   * Updates user data in the context
    */
   const updateUser = (updatedUser: User) => {
     setUser(updatedUser);
@@ -85,7 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 };
 
 /**
- * Hook personalizado para usar el contexto de autenticación
+ * Custom hook to use the authentication context
  */
 export const useAuth = () => {
   const context = useContext(AuthContext);

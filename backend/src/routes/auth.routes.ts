@@ -5,13 +5,13 @@ const router = Router();
 
 /**
  * POST /api/auth/register
- * Registra un nuevo usuario
+ * Registers a new user
  */
 router.post("/register", register);
 
 /**
  * POST /api/auth/login
- * Autentica un usuario y devuelve un JWT
+ * Authenticates a user and returns a JWT
  */
 router.post("/login", login);
 

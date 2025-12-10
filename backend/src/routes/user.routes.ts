@@ -6,19 +6,19 @@ const router = Router();
 
 /**
  * GET /api/users/profile
- * Obtiene el perfil del usuario autenticado
+ * Gets the authenticated user's profile
  */
 router.get("/profile", authMiddleware, getProfile);
 
 /**
  * PUT /api/users/profile
- * Actualiza el perfil del usuario autenticado
+ * Updates the authenticated user's profile
  */
 router.put("/profile", authMiddleware, updateProfile);
 
 /**
  * GET /api/users
- * Lista todos los usuarios (requiere autenticación)
+ * Lists all users (requires authentication)
  */
 router.get("/", authMiddleware, listUsers);
 

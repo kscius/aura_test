@@ -1,4 +1,4 @@
-// Extensión de tipos para Express Request
+// Express Request type extension
 declare namespace Express {
   export interface Request {
     user?: {

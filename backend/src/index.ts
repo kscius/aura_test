@@ -7,13 +7,13 @@ import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
 
-// Cargar variables de entorno
+// Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares globales
+// Global middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -27,11 +27,11 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Rutas de la API
+// API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
-// Ruta 404
+// 404 route
 app.use((req, res) => {
   res.status(404).json({
     error: "NotFoundError",
@@ -39,17 +39,17 @@ app.use((req, res) => {
   });
 });
 
-// Middleware de manejo de errores (debe ir al final)
+// Error handling middleware (must be at the end)
 app.use(errorMiddleware);
 
-// Inicializar conexión a la base de datos y servidor
+// Initialize database connection and server
 const startServer = async () => {
   try {
-    // Conectar a la base de datos
+    // Connect to database
     await AppDataSource.initialize();
     console.log("✅ Database connection established");
 
-    // Iniciar servidor
+    // Start server
     app.listen(PORT, () => {
       console.log(`🚀 Server is running on http://localhost:${PORT}`);
       console.log(`📊 Environment: ${process.env.NODE_ENV || "development"}`);
