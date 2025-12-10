@@ -1,0 +1,57 @@
+# AURA Backend - Railway Environment Variables Template
+# Copy these variables to your Railway project settings
+
+# ============================================
+# Server Configuration
+# ============================================
+PORT=3000
+NODE_ENV=production
+
+# ============================================
+# Database Configuration (Railway PostgreSQL)
+# ============================================
+# Railway automatically provides these variables when you add PostgreSQL
+# You can reference them using Railway's variable syntax:
+
+DB_HOST=${{Postgres.PGHOST}}
+DB_PORT=${{Postgres.PGPORT}}
+DB_USERNAME=${{Postgres.PGUSER}}
+DB_PASSWORD=${{Postgres.PGPASSWORD}}
+DB_NAME=${{Postgres.PGDATABASE}}
+
+# Alternative: Railway also provides DATABASE_URL
+# If using DATABASE_URL, you can parse it or use it directly with TypeORM
+# DATABASE_URL=${{Postgres.DATABASE_URL}}
+
+# ============================================
+# JWT Configuration (REQUIRED - CHANGE THESE!)
+# ============================================
+# Generate a secure random string for JWT_SECRET:
+# Run: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+JWT_SECRET=CHANGE_THIS_TO_A_SECURE_RANDOM_STRING_MIN_32_CHARACTERS
+JWT_EXPIRES_IN=7d
+
+# ============================================
+# CORS Configuration (REQUIRED)
+# ============================================
+# Set this to your Vercel frontend URL after deploying
+# Example: https://aura-frontend.vercel.app
+
+CORS_ORIGIN=https://your-frontend-url.vercel.app
+
+# ============================================
+# NOTES:
+# ============================================
+# 1. Railway's ${{Postgres.XXX}} syntax automatically references
+#    the PostgreSQL database you added to your project
+#
+# 2. Generate JWT_SECRET with:
+#    PowerShell: .\scripts\setup-deployment.ps1
+#    Bash: ./scripts/setup-deployment.sh
+#
+# 3. After deploying frontend to Vercel, update CORS_ORIGIN
+#
+# 4. Never commit real secrets to Git!
+#    This is just a template.
+

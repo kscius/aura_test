@@ -570,18 +570,55 @@ npm install --save-dev vitest @testing-library/react @testing-library/jest-dom
 
 ## 🚢 Deployment
 
-### Backend
+### Quick Deploy (Recommended)
 
-Recommendations:
-- **Railway** - Easy deployment with PostgreSQL included
-- **Heroku** - With PostgreSQL addon
+AURA is configured for **one-click deployment** with:
+
+- **Frontend**: Vercel (Free)
+- **Backend + PostgreSQL**: Railway ($5 credit/month)
+- **CI/CD**: GitHub Actions (Automatic)
+
+**🚀 Start Deployment:**
+
+```bash
+# Run setup helper (generates JWT secret, installs CLI tools)
+./scripts/setup-deployment.ps1   # Windows
+# or
+./scripts/setup-deployment.sh    # Mac/Linux
+```
+
+**📖 Complete Guide:** See [DEPLOYMENT.md](./DEPLOYMENT.md) for step-by-step instructions.
+
+### Deployment Features
+
+✅ **Automatic Deployments** - Every push to `main` triggers deployment  
+✅ **Tests Before Deploy** - GitHub Actions runs tests first  
+✅ **Zero Downtime** - Rolling deployments  
+✅ **Free Tier Available** - Vercel free + Railway $5 credit  
+✅ **HTTPS Included** - Automatic SSL certificates  
+✅ **Easy Rollback** - One-click in both platforms  
+
+### Cost Breakdown
+
+| Service | Tier | Cost |
+|---------|------|------|
+| Vercel (Frontend) | Free | $0/month |
+| Railway (Backend + DB) | Hobby | ~$3-4/month ($5 credit included) |
+| **Total** | | **~$0-2/month** |
+
+### Alternative Options
+
+- **Railway** - Easy deployment with PostgreSQL included ⭐ **Recommended**
+- **Render** - 100% free tier (with sleep after 15min inactivity)
+- **Heroku** - With PostgreSQL addon (paid)
 - **DigitalOcean App Platform** - Simple configuration
 - **AWS/GCP/Azure** - For enterprise production
 
-Before deployment:
-1. Configure environment variables
-2. Disable `synchronize` in TypeORM
-3. Run migrations
+### Before Deployment
+
+1. Generate strong JWT secret
+2. Configure environment variables
+3. Disable `synchronize` in TypeORM (use migrations)
 4. Configure CORS with frontend domain
 
 ### Frontend
