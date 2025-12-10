@@ -1,35 +1,35 @@
 # AURA Frontend
 
-Aplicación web React para gestión de usuarios con autenticación JWT, construida con TypeScript y Vite.
+React web application for user management with JWT authentication, built with TypeScript and Vite.
 
-## 🚀 Tecnologías
+## 🚀 Technologies
 
-- **React** v19.2 - Librería UI
-- **TypeScript** v5.9 - Tipado estático
-- **Vite** v7.2 - Build tool y dev server
-- **React Router** v6 - Enrutamiento
-- **CSS3** - Estilos personalizados
+- **React** v19.2 - UI library
+- **TypeScript** v5.9 - Static typing
+- **Vite** v7.2 - Build tool and dev server
+- **React Router** v6 - Routing
+- **CSS3** - Custom styles
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 frontend/
 ├── src/
-│   ├── api/                  # Cliente HTTP
-│   │   └── client.ts         # Funciones para llamar a la API
-│   ├── components/           # Componentes reutilizables
+│   ├── api/                  # HTTP client
+│   │   └── client.ts         # Functions to call the API
+│   ├── components/           # Reusable components
 │   │   └── ProtectedRoute.tsx
-│   ├── context/              # Contextos React
-│   │   └── AuthContext.tsx   # Estado global de autenticación
-│   ├── pages/                # Páginas de la aplicación
+│   ├── context/              # React contexts
+│   │   └── AuthContext.tsx   # Global authentication state
+│   ├── pages/                # Application pages
 │   │   ├── Login.tsx
 │   │   ├── Register.tsx
 │   │   └── Dashboard.tsx
-│   ├── types/                # Tipos TypeScript
+│   ├── types/                # TypeScript types
 │   │   └── index.ts
-│   ├── App.tsx               # Componente principal con rutas
-│   ├── main.tsx              # Punto de entrada
-│   └── index.css             # Estilos globales
+│   ├── App.tsx               # Main component with routes
+│   ├── main.tsx              # Entry point
+│   └── index.css             # Global styles
 ├── public/
 ├── index.html
 ├── package.json
@@ -39,122 +39,122 @@ frontend/
 └── README.md
 ```
 
-## ⚙️ Instalación
+## ⚙️ Installation
 
-### 1. Instalar dependencias
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Configurar variables de entorno
+### 2. Configure environment variables
 
-Crear un archivo `.env` en la raíz del directorio `frontend/`:
+Create a `.env` file in the `frontend/` root directory:
 
 ```env
 VITE_API_BASE_URL=http://localhost:3000
 ```
 
-**Nota:** En producción, cambiar esta URL por la del backend desplegado.
+**Note:** In production, change this URL to the deployed backend URL.
 
-## 🏃 Ejecutar el Proyecto
+## 🏃 Running the Project
 
-### Modo Desarrollo
+### Development Mode
 
 ```bash
 npm run dev
 ```
 
-La aplicación estará disponible en `http://localhost:5173`
+The application will be available at `http://localhost:5173`
 
-### Build para Producción
+### Production Build
 
 ```bash
 npm run build
 ```
 
-Los archivos optimizados se generarán en el directorio `dist/`
+Optimized files will be generated in the `dist/` directory
 
-### Preview de Producción
+### Production Preview
 
 ```bash
 npm run preview
 ```
 
-Sirve la versión de producción localmente para pruebas.
+Serves the production build locally for testing.
 
-## 🎨 Características
+## 🎨 Features
 
-### Páginas
+### Pages
 
 #### 1. Login (`/login`)
-- Formulario de inicio de sesión
-- Validación de email y contraseña
-- Manejo de errores del servidor
-- Estado de carga durante la autenticación
-- Redirección a dashboard tras login exitoso
-- Link para registro de nuevos usuarios
+- Login form
+- Email and password validation
+- Server error handling
+- Loading state during authentication
+- Redirect to dashboard after successful login
+- Link to register new users
 
 #### 2. Register (`/register`)
-- Formulario de registro con validación
-- Campos: email, nombre, apellido, contraseña
-- Confirmación de contraseña
-- Validación en tiempo real
-- Manejo de errores (email duplicado, etc.)
-- Redirección automática tras registro exitoso
+- Registration form with validation
+- Fields: email, first name, last name, password
+- Password confirmation
+- Real-time validation
+- Error handling (duplicate email, etc.)
+- Automatic redirect after successful registration
 
 #### 3. Dashboard (`/dashboard`)
-- Vista protegida (requiere autenticación)
-- Muestra perfil del usuario actual
-- Lista de todos los usuarios registrados
-- Formulario de edición de perfil
-- Botón de logout
-- Estados de carga y error
+- Protected view (requires authentication)
+- Shows current user profile
+- List of all registered users
+- Profile edit form
+- Logout button
+- Loading and error states
 
-### Funcionalidades de Autenticación
+### Authentication Features
 
 **AuthContext:**
-- Estado global de autenticación
-- Persistencia del token en localStorage
-- Auto-login al recargar la página
-- Métodos: `login`, `register`, `logout`, `updateUser`
+- Global authentication state
+- Token persistence in localStorage
+- Auto-login on page reload
+- Methods: `login`, `register`, `logout`, `updateUser`
 
 **ProtectedRoute:**
-- Componente HOC para proteger rutas
-- Redirección automática a login si no hay usuario
-- Muestra loading mientras verifica autenticación
+- HOC component to protect routes
+- Automatic redirect to login if no user
+- Shows loading while verifying authentication
 
-### Cliente API
+### API Client
 
-Todas las peticiones HTTP están centralizadas en `src/api/client.ts`:
+All HTTP requests are centralized in `src/api/client.ts`:
 
-- `registerUser(data)` - Registro de usuario
-- `loginUser(data)` - Inicio de sesión
-- `getProfile()` - Obtener perfil actual
-- `updateProfile(data)` - Actualizar perfil
-- `getUsers()` - Listar todos los usuarios
+- `registerUser(data)` - User registration
+- `loginUser(data)` - Login
+- `getProfile()` - Get current profile
+- `updateProfile(data)` - Update profile
+- `getUsers()` - List all users
 
-Características:
-- Manejo automático de tokens JWT
-- Headers configurados automáticamente
-- Clase `ApiError` para errores tipados
-- Type-safe con TypeScript
+Features:
+- Automatic JWT token management
+- Automatically configured headers
+- `ApiError` class for typed errors
+- Type-safe with TypeScript
 
-## 🎯 Rutas de la Aplicación
+## 🎯 Application Routes
 
-| Ruta | Componente | Protegida | Descripción |
+| Route | Component | Protected | Description |
 |------|------------|-----------|-------------|
-| `/` | - | No | Redirecciona a `/login` |
-| `/login` | Login | No | Página de inicio de sesión |
-| `/register` | Register | No | Página de registro |
-| `/dashboard` | Dashboard | **Sí** | Panel de usuario |
-| `*` | - | No | Redirecciona a `/login` |
+| `/` | - | No | Redirects to `/login` |
+| `/login` | Login | No | Login page |
+| `/register` | Register | No | Registration page |
+| `/dashboard` | Dashboard | **Yes** | User dashboard |
+| `*` | - | No | Redirects to `/login` |
 
-## 🎨 Estilos
+## 🎨 Styles
 
-El proyecto utiliza **CSS puro** con variables CSS para theming:
+The project uses **pure CSS** with CSS variables for theming:
 
-### Variables de Color
+### Color Variables
 
 ```css
 :root {
@@ -176,37 +176,37 @@ El proyecto utiliza **CSS puro** con variables CSS para theming:
 ### Responsive Design
 
 - Mobile-first approach
-- Breakpoint principal: 768px
-- Adaptación de formularios y tablas en móviles
+- Main breakpoint: 768px
+- Adaptation of forms and tables on mobile devices
 
-## 🔒 Seguridad
+## 🔒 Security
 
-### Almacenamiento de Tokens
+### Token Storage
 
-- Los tokens JWT se guardan en `localStorage`
-- Se adjuntan automáticamente en el header `Authorization: Bearer <token>`
-- Se eliminan al hacer logout
+- JWT tokens are saved in `localStorage`
+- Automatically attached in the `Authorization: Bearer <token>` header
+- Removed on logout
 
-**Nota para Producción:**
-Considerar usar `httpOnly cookies` para mayor seguridad contra XSS.
+**Note for Production:**
+Consider using `httpOnly cookies` for better XSS protection.
 
-### Validación de Formularios
+### Form Validation
 
-Validación en el cliente para:
-- Formato de email
-- Longitud mínima de contraseña (6 caracteres)
-- Campos requeridos
-- Coincidencia de contraseñas
+Client-side validation for:
+- Email format
+- Minimum password length (6 characters)
+- Required fields
+- Password matching
 
 ## 🧪 Testing
 
-Actualmente no hay tests implementados. Para agregar tests:
+Currently no tests implemented. To add tests:
 
 ```bash
 npm install --save-dev vitest @testing-library/react @testing-library/jest-dom @testing-library/user-event jsdom
 ```
 
-Configurar en `vite.config.ts`:
+Configure in `vite.config.ts`:
 
 ```typescript
 import { defineConfig } from 'vite';
@@ -222,7 +222,7 @@ export default defineConfig({
 });
 ```
 
-Ejemplo de test:
+Example test:
 
 ```typescript
 import { render, screen } from '@testing-library/react';
@@ -234,20 +234,20 @@ test('renders login form', () => {
 });
 ```
 
-## 🚢 Deploy
+## 🚢 Deployment
 
 ### Vercel
 
 ```bash
-# Instalar Vercel CLI
+# Install Vercel CLI
 npm install -g vercel
 
 # Deploy
 vercel
 ```
 
-Configurar variable de entorno en Vercel:
-- `VITE_API_BASE_URL` = URL del backend en producción
+Configure environment variable in Vercel:
+- `VITE_API_BASE_URL` = Production backend URL
 
 ### Netlify
 
@@ -255,11 +255,11 @@ Configurar variable de entorno en Vercel:
 # Build
 npm run build
 
-# Deploy carpeta dist/
+# Deploy dist/ folder
 netlify deploy --prod --dir=dist
 ```
 
-Configurar en `netlify.toml`:
+Configure in `netlify.toml`:
 
 ```toml
 [build]
@@ -274,16 +274,16 @@ Configurar en `netlify.toml`:
 
 ### GitHub Pages
 
-Agregar al `vite.config.ts`:
+Add to `vite.config.ts`:
 
 ```typescript
 export default defineConfig({
-  base: '/nombre-repo/',
+  base: '/repo-name/',
   // ...
 });
 ```
 
-Build y deploy:
+Build and deploy:
 
 ```bash
 npm run build
@@ -291,9 +291,9 @@ npm install -g gh-pages
 gh-pages -d dist
 ```
 
-## 🔧 Configuración de Vite
+## 🔧 Vite Configuration
 
-El proyecto usa la configuración por defecto de Vite con React:
+The project uses the default Vite configuration with React:
 
 ```typescript
 import { defineConfig } from 'vite'
@@ -304,9 +304,9 @@ export default defineConfig({
 })
 ```
 
-### Alias de Rutas (Opcional)
+### Path Aliases (Optional)
 
-Para agregar alias:
+To add aliases:
 
 ```typescript
 export default defineConfig({
@@ -321,62 +321,62 @@ export default defineConfig({
 })
 ```
 
-## 📝 Scripts Disponibles
+## 📝 Available Scripts
 
 ```json
 {
-  "dev": "vite",                    // Servidor de desarrollo
-  "build": "tsc -b && vite build",  // Build de producción
+  "dev": "vite",                    // Development server
+  "build": "tsc -b && vite build",  // Production build
   "lint": "eslint .",               // Linter
-  "preview": "vite preview"         // Preview de build
+  "preview": "vite preview"         // Build preview
 }
 ```
 
 ## 🔧 Troubleshooting
 
-### Error: "Network Error" o "Failed to fetch"
+### Error: "Network Error" or "Failed to fetch"
 
-El backend no está corriendo o la URL es incorrecta.
+Backend is not running or URL is incorrect.
 
-**Solución:**
-1. Verificar que el backend esté corriendo en `http://localhost:3000`
-2. Verificar `VITE_API_BASE_URL` en `.env`
-3. Verificar CORS en el backend
+**Solution:**
+1. Verify backend is running at `http://localhost:3000`
+2. Check `VITE_API_BASE_URL` in `.env`
+3. Verify CORS in backend
 
-### Error: "Unauthorized" en todas las peticiones
+### Error: "Unauthorized" on all requests
 
-Token inválido o expirado.
+Invalid or expired token.
 
-**Solución:**
-1. Hacer logout y login nuevamente
-2. Verificar que el `JWT_SECRET` del backend no haya cambiado
-3. Limpiar localStorage: `localStorage.clear()`
+**Solution:**
+1. Logout and login again
+2. Verify backend `JWT_SECRET` hasn't changed
+3. Clear localStorage: `localStorage.clear()`
 
-### La aplicación no se actualiza tras cambios en `.env`
+### Application doesn't update after `.env` changes
 
-Vite requiere reiniciar el servidor tras cambios en variables de entorno.
+Vite requires server restart after environment variable changes.
 
-**Solución:**
+**Solution:**
 ```bash
-# Detener con Ctrl+C
-# Reiniciar
+# Stop with Ctrl+C
+# Restart
 npm run dev
 ```
 
-## 🎯 Mejoras Futuras
+## 🎯 Future Improvements
 
-- [ ] Tests con Vitest y Testing Library
-- [ ] Internacionalización (i18n)
-- [ ] Tema oscuro
-- [ ] Notificaciones toast
+- [ ] Tests with Vitest and Testing Library
+- [ ] Internationalization (i18n)
+- [ ] Dark theme
+- [ ] Toast notifications
 - [ ] Skeleton loaders
-- [ ] Validación en tiempo real con debounce
-- [ ] Paginación en lista de usuarios
-- [ ] Búsqueda y filtros
-- [ ] Subida de avatar
+- [ ] Real-time validation with debounce
+- [ ] Pagination in user list
+- [ ] Search and filters
+- [ ] Avatar upload
 - [ ] PWA (Progressive Web App)
 
-## 📚 Recursos
+## 📚 Resources
 
 - [React Documentation](https://react.dev/)
 - [Vite Documentation](https://vitejs.dev/)
@@ -385,4 +385,4 @@ npm run dev
 
 ---
 
-Para más información, consulta el `README.md` principal del proyecto.
+For more information, see the main project `README.md`.

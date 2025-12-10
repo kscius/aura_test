@@ -1,89 +1,89 @@
 # AURA - Augmented Universal Research Assistant
 
-Una aplicación web full-stack para gestión de usuarios con autenticación JWT, construida con Node.js, Express, TypeORM, PostgreSQL, React y TypeScript.
+A full-stack web application for user management with JWT authentication, built with Node.js, Express, TypeORM, PostgreSQL, React, and TypeScript.
 
-## 📋 Descripción
+## 📋 Description
 
-AURA es una plataforma de gestión de usuarios que permite el registro, autenticación y administración de perfiles. El proyecto demuestra las mejores prácticas de desarrollo full-stack con una arquitectura modular, validaciones robustas, seguridad implementada correctamente y una interfaz de usuario moderna e intuitiva.
+AURA is a user management platform that enables registration, authentication, and profile administration. The project demonstrates full-stack development best practices with modular architecture, robust validations, properly implemented security, and a modern, intuitive user interface.
 
-## 🚀 Tecnologías Utilizadas
+## 🚀 Technologies Used
 
 ### Backend
-- **Node.js** v18+ - Entorno de ejecución JavaScript
-- **Express** v4.18 - Framework web minimalista
-- **TypeScript** v5.3 - Superset tipado de JavaScript
-- **TypeORM** v0.3.17 - ORM para TypeScript y JavaScript
-- **PostgreSQL** - Base de datos relacional
-- **JWT** (jsonwebtoken) v9.0 - Autenticación basada en tokens
-- **bcryptjs** v2.4 - Hash de contraseñas
-- **Zod** v3.22 - Validación de esquemas
+- **Node.js** v18+ - JavaScript runtime environment
+- **Express** v4.18 - Minimalist web framework
+- **TypeScript** v5.3 - Typed superset of JavaScript
+- **TypeORM** v0.3.17 - ORM for TypeScript and JavaScript
+- **PostgreSQL** - Relational database
+- **JWT** (jsonwebtoken) v9.0 - Token-based authentication
+- **bcryptjs** v2.4 - Password hashing
+- **Zod** v3.22 - Schema validation
 
 ### Frontend
-- **React** v19.2 - Librería para interfaces de usuario
-- **TypeScript** v5.9 - Tipado estático
-- **Vite** v7.2 - Build tool y dev server
-- **React Router** v6 - Enrutamiento del lado del cliente
+- **React** v19.2 - UI library
+- **TypeScript** v5.9 - Static typing
+- **Vite** v7.2 - Build tool and dev server
+- **React Router** v6 - Client-side routing
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 aura/
 ├── backend/
 │   ├── src/
-│   │   ├── controllers/      # Lógica de controladores
-│   │   ├── entities/          # Modelos de TypeORM
-│   │   ├── middleware/        # Middlewares personalizados
-│   │   ├── routes/            # Definición de rutas
-│   │   ├── services/          # Lógica de negocio
-│   │   ├── types/             # Tipos TypeScript
-│   │   ├── utils/             # Utilidades (JWT, hash)
-│   │   ├── validation/        # Esquemas de validación Zod
-│   │   ├── data-source.ts     # Configuración TypeORM
-│   │   └── index.ts           # Punto de entrada
+│   │   ├── controllers/      # Controller logic
+│   │   ├── entities/          # TypeORM models
+│   │   ├── middleware/        # Custom middlewares
+│   │   ├── routes/            # Route definitions
+│   │   ├── services/          # Business logic
+│   │   ├── types/             # TypeScript types
+│   │   ├── utils/             # Utilities (JWT, hash)
+│   │   ├── validation/        # Zod validation schemas
+│   │   ├── data-source.ts     # TypeORM configuration
+│   │   └── index.ts           # Entry point
 │   ├── package.json
 │   ├── tsconfig.json
 │   └── env.example
 ├── frontend/
 │   ├── src/
-│   │   ├── api/               # Cliente HTTP
-│   │   ├── components/        # Componentes React
-│   │   ├── context/           # Contextos React
-│   │   ├── pages/             # Páginas de la aplicación
-│   │   ├── types/             # Tipos TypeScript
-│   │   ├── App.tsx            # Componente principal
-│   │   ├── main.tsx           # Punto de entrada
-│   │   └── index.css          # Estilos globales
+│   │   ├── api/               # HTTP client
+│   │   ├── components/        # React components
+│   │   ├── context/           # React contexts
+│   │   ├── pages/             # Application pages
+│   │   ├── types/             # TypeScript types
+│   │   ├── App.tsx            # Main component
+│   │   ├── main.tsx           # Entry point
+│   │   └── index.css          # Global styles
 │   ├── package.json
 │   ├── tsconfig.json
 │   └── env.example
 └── README.md
 ```
 
-## ⚙️ Instalación y Configuración
+## ⚙️ Installation and Configuration
 
-### Prerrequisitos
+### Prerequisites
 
-- **Node.js** v18 o superior
-- **npm** v9 o superior
-- **PostgreSQL** v14 o superior
+- **Node.js** v18 or higher
+- **npm** v9 or higher
+- **PostgreSQL** v14 or higher
 
-### Pasos de Instalación
+### Installation Steps
 
-#### 1. Clonar el repositorio
+#### 1. Clone the repository
 
 ```bash
 git clone <repository-url>
 cd aurora_test
 ```
 
-#### 2. Configurar Backend
+#### 2. Backend Setup
 
 ```bash
 cd backend
 npm install
 ```
 
-Crear archivo `.env` basado en `env.example`:
+Create a `.env` file based on `env.example`:
 
 ```env
 # Server Configuration
@@ -94,71 +94,71 @@ NODE_ENV=development
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
-DB_PASSWORD=tu_contraseña
+DB_PASSWORD=your_password
 DB_NAME=aura_db
 
 # JWT Configuration
-JWT_SECRET=tu_secreto_super_seguro_cambialo_en_produccion
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
 JWT_EXPIRES_IN=7d
 ```
 
-#### 3. Configurar Base de Datos
+#### 3. Database Setup
 
-Crear la base de datos PostgreSQL:
+Create the PostgreSQL database:
 
 ```bash
-# Conectarse a PostgreSQL
+# Connect to PostgreSQL
 psql -U postgres
 
-# Crear la base de datos
+# Create database
 CREATE DATABASE aura_db;
 
-# Salir
+# Exit
 \q
 ```
 
-TypeORM creará automáticamente las tablas cuando ejecutes el servidor en modo desarrollo (gracias a `synchronize: true` en `data-source.ts`).
+TypeORM will automatically create tables when you run the server in development mode (thanks to `synchronize: true` in `data-source.ts`).
 
-**Nota:** En producción, desactiva `synchronize` y usa migraciones.
+**Note:** In production, disable `synchronize` and use migrations.
 
-#### 4. Configurar Frontend
+#### 4. Frontend Setup
 
 ```bash
 cd ../frontend
 npm install
 ```
 
-Crear archivo `.env` basado en `env.example`:
+Create a `.env` file based on `env.example`:
 
 ```env
 VITE_API_BASE_URL=http://localhost:3000
 ```
 
-## 🏃 Uso
+## 🏃 Usage
 
-### Ejecutar el Backend
+### Run the Backend
 
-Desde la carpeta `backend/`:
-
-```bash
-npm run dev
-```
-
-El servidor estará disponible en `http://localhost:3000`
-
-### Ejecutar el Frontend
-
-Desde la carpeta `frontend/`:
+From the `backend/` folder:
 
 ```bash
 npm run dev
 ```
 
-La aplicación estará disponible en `http://localhost:5173`
+The server will be available at `http://localhost:3000`
 
-### Credenciales de Prueba
+### Run the Frontend
 
-No hay credenciales predefinidas. Regístrate usando la página de registro en `http://localhost:5173/register`
+From the `frontend/` folder:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+### Test Credentials
+
+There are no predefined credentials. Register using the registration page at `http://localhost:5173/register`
 
 ## 📚 API Documentation
 
@@ -170,19 +170,19 @@ http://localhost:3000
 
 ### Endpoints
 
-#### 1. Registro de Usuario
+#### 1. User Registration
 
 **POST** `/api/auth/register`
 
-Registra un nuevo usuario en el sistema.
+Registers a new user in the system.
 
 **Request Body:**
 ```json
 {
-  "email": "usuario@ejemplo.com",
-  "firstName": "Juan",
-  "lastName": "Pérez",
-  "password": "contraseña123"
+  "email": "user@example.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "password": "password123"
 }
 ```
 
@@ -194,9 +194,9 @@ Registra un nuevo usuario en el sistema.
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     "user": {
       "id": 1,
-      "email": "usuario@ejemplo.com",
-      "firstName": "Juan",
-      "lastName": "Pérez",
+      "email": "user@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
       "createdAt": "2024-01-01T00:00:00.000Z",
       "updatedAt": "2024-01-01T00:00:00.000Z"
     }
@@ -204,23 +204,23 @@ Registra un nuevo usuario en el sistema.
 }
 ```
 
-**Errores:**
-- `400` - Email ya en uso o datos inválidos
-- `500` - Error del servidor
+**Errors:**
+- `400` - Email already in use or invalid data
+- `500` - Server error
 
 ---
 
-#### 2. Login de Usuario
+#### 2. User Login
 
 **POST** `/api/auth/login`
 
-Autentica un usuario y devuelve un token JWT.
+Authenticates a user and returns a JWT token.
 
 **Request Body:**
 ```json
 {
-  "email": "usuario@ejemplo.com",
-  "password": "contraseña123"
+  "email": "user@example.com",
+  "password": "password123"
 }
 ```
 
@@ -232,9 +232,9 @@ Autentica un usuario y devuelve un token JWT.
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     "user": {
       "id": 1,
-      "email": "usuario@ejemplo.com",
-      "firstName": "Juan",
-      "lastName": "Pérez",
+      "email": "user@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
       "createdAt": "2024-01-01T00:00:00.000Z",
       "updatedAt": "2024-01-01T00:00:00.000Z"
     }
@@ -242,17 +242,17 @@ Autentica un usuario y devuelve un token JWT.
 }
 ```
 
-**Errores:**
-- `401` - Credenciales inválidas
-- `500` - Error del servidor
+**Errors:**
+- `401` - Invalid credentials
+- `500` - Server error
 
 ---
 
-#### 3. Obtener Perfil
+#### 3. Get Profile
 
 **GET** `/api/users/profile`
 
-Obtiene el perfil del usuario autenticado.
+Gets the authenticated user's profile.
 
 **Headers:**
 ```
@@ -265,27 +265,27 @@ Authorization: Bearer <token>
   "message": "Profile retrieved successfully",
   "data": {
     "id": 1,
-    "email": "usuario@ejemplo.com",
-    "firstName": "Juan",
-    "lastName": "Pérez",
+    "email": "user@example.com",
+    "firstName": "John",
+    "lastName": "Doe",
     "createdAt": "2024-01-01T00:00:00.000Z",
     "updatedAt": "2024-01-01T00:00:00.000Z"
   }
 }
 ```
 
-**Errores:**
-- `401` - Token inválido o no proporcionado
-- `404` - Usuario no encontrado
-- `500` - Error del servidor
+**Errors:**
+- `401` - Invalid or missing token
+- `404` - User not found
+- `500` - Server error
 
 ---
 
-#### 4. Actualizar Perfil
+#### 4. Update Profile
 
 **PUT** `/api/users/profile`
 
-Actualiza el perfil del usuario autenticado.
+Updates the authenticated user's profile.
 
 **Headers:**
 ```
@@ -295,13 +295,13 @@ Authorization: Bearer <token>
 **Request Body:**
 ```json
 {
-  "email": "nuevo@ejemplo.com",
-  "firstName": "Juan Carlos",
-  "lastName": "Pérez García"
+  "email": "newemail@example.com",
+  "firstName": "John Carlos",
+  "lastName": "Doe Smith"
 }
 ```
 
-Nota: Todos los campos son opcionales, solo envía los que deseas actualizar.
+Note: All fields are optional, send only what you want to update.
 
 **Response (200):**
 ```json
@@ -309,28 +309,28 @@ Nota: Todos los campos son opcionales, solo envía los que deseas actualizar.
   "message": "Profile updated successfully",
   "data": {
     "id": 1,
-    "email": "nuevo@ejemplo.com",
-    "firstName": "Juan Carlos",
-    "lastName": "Pérez García",
+    "email": "newemail@example.com",
+    "firstName": "John Carlos",
+    "lastName": "Doe Smith",
     "createdAt": "2024-01-01T00:00:00.000Z",
     "updatedAt": "2024-01-01T00:00:00.000Z"
   }
 }
 ```
 
-**Errores:**
-- `400` - Email ya en uso o datos inválidos
-- `401` - Token inválido
-- `404` - Usuario no encontrado
-- `500` - Error del servidor
+**Errors:**
+- `400` - Email already in use or invalid data
+- `401` - Invalid token
+- `404` - User not found
+- `500` - Server error
 
 ---
 
-#### 5. Listar Usuarios
+#### 5. List Users
 
 **GET** `/api/users`
 
-Obtiene la lista de todos los usuarios registrados.
+Gets the list of all registered users.
 
 **Headers:**
 ```
@@ -344,163 +344,163 @@ Authorization: Bearer <token>
   "data": [
     {
       "id": 1,
-      "email": "usuario1@ejemplo.com",
-      "firstName": "Juan",
-      "lastName": "Pérez",
+      "email": "user1@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
       "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": 2,
-      "email": "usuario2@ejemplo.com",
-      "firstName": "María",
-      "lastName": "García",
+      "email": "user2@example.com",
+      "firstName": "Jane",
+      "lastName": "Smith",
       "createdAt": "2024-01-02T00:00:00.000Z"
     }
   ]
 }
 ```
 
-**Errores:**
-- `401` - Token inválido o no proporcionado
-- `500` - Error del servidor
+**Errors:**
+- `401` - Invalid or missing token
+- `500` - Server error
 
 ---
 
-### Formato de Errores
+### Error Format
 
-Todos los endpoints devuelven errores en el siguiente formato:
+All endpoints return errors in the following format:
 
 ```json
 {
   "error": "ErrorType",
-  "message": "Descripción del error",
+  "message": "Error description",
   "details": {}
 }
 ```
 
-## 🎯 Decisiones Técnicas
+## 🎯 Technical Decisions
 
-### Arquitectura Elegida
+### Architecture
 
-**Backend - Arquitectura en Capas:**
+**Backend - Layered Architecture:**
 
-1. **Controladores** - Manejan las peticiones HTTP y respuestas
-2. **Servicios** - Contienen la lógica de negocio
-3. **Entidades** - Modelos de datos TypeORM
-4. **Middleware** - Autenticación, validación, manejo de errores
-5. **Validación** - Esquemas Zod para validación de datos
+1. **Controllers** - Handle HTTP requests and responses
+2. **Services** - Contain business logic
+3. **Entities** - TypeORM data models
+4. **Middleware** - Authentication, validation, error handling
+5. **Validation** - Zod schemas for data validation
 
-Esta separación permite:
-- **Mantenibilidad**: Cada capa tiene una responsabilidad clara
-- **Testabilidad**: Fácil de escribir tests unitarios
-- **Escalabilidad**: Fácil agregar nuevas funcionalidades
+This separation provides:
+- **Maintainability**: Each layer has a clear responsibility
+- **Testability**: Easy to write unit tests
+- **Scalability**: Easy to add new features
 
 **Frontend - Component-Based Architecture:**
 
-- **Context API** para manejo de estado global (autenticación)
-- **React Router** para navegación
-- **Componentes reutilizables** y modulares
-- **API client centralizado** para todas las peticiones HTTP
+- **Context API** for global state management (authentication)
+- **React Router** for navigation
+- **Reusable components** and modular design
+- **Centralized API client** for all HTTP requests
 
 ### Express vs NestJS
 
-Elegí **Express** por:
-- Simplicidad y curva de aprendizaje más suave
-- Menor overhead para un proyecto de este tamaño
-- Mayor control sobre la estructura
-- Amplia documentación y comunidad
+Chose **Express** for:
+- Simplicity and easier learning curve
+- Lower overhead for a project of this size
+- Greater control over structure
+- Extensive documentation and community
 
-NestJS sería ideal para proyectos enterprise más grandes que requieran:
-- Inyección de dependencias robusta
-- Arquitectura opinionada
-- Integración con GraphQL, microservicios, etc.
+NestJS would be ideal for larger enterprise projects requiring:
+- Robust dependency injection
+- Opinionated architecture
+- Integration with GraphQL, microservices, etc.
 
 ### React vs Vue
 
-Elegí **React** por:
-- Mayor ecosistema y comunidad
-- Mejor soporte TypeScript
-- Más oportunidades laborales
-- Hooks proporcionan una API poderosa y flexible
+Chose **React** for:
+- Larger ecosystem and community
+- Better TypeScript support
+- More job opportunities
+- Hooks provide a powerful and flexible API
 
-### JWT y Seguridad
+### JWT and Security
 
-**Almacenamiento del Token:**
-- Guardado en `localStorage` para simplicidad
-- En producción, considerar `httpOnly cookies` para mayor seguridad contra XSS
+**Token Storage:**
+- Stored in `localStorage` for simplicity
+- In production, consider `httpOnly cookies` for better XSS protection
 
-**Medidas de Seguridad Implementadas:**
-1. **Hashing de contraseñas** con bcrypt (10 rounds)
-2. **JWT con expiración** (7 días por defecto)
-3. **Validación de entrada** con Zod en todos los endpoints
-4. **Consultas parametrizadas** TypeORM previene SQL injection
-5. **CORS configurado** para permitir solo orígenes específicos
-6. **Headers de seguridad** (podría mejorarse con helmet.js)
-7. **Mensajes de error genéricos** que no exponen información sensible
+**Security Measures Implemented:**
+1. **Password hashing** with bcrypt (10 rounds)
+2. **JWT with expiration** (7 days by default)
+3. **Input validation** with Zod on all endpoints
+4. **Parameterized queries** - TypeORM prevents SQL injection
+5. **CORS configured** to allow only specific origins
+6. **Security headers** (could be improved with helmet.js)
+7. **Generic error messages** that don't expose sensitive information
 
-### TypeORM y Base de Datos
+### TypeORM and Database
 
-**Por qué TypeORM:**
-- Excelente integración con TypeScript
-- Decoradores intuitivos para definir entidades
-- Soporte para migraciones
-- Active Record y Data Mapper patterns
+**Why TypeORM:**
+- Excellent TypeScript integration
+- Intuitive decorators for entity definition
+- Migration support
+- Active Record and Data Mapper patterns
 
-**Configuración:**
-- `synchronize: true` solo en desarrollo (crea tablas automáticamente)
-- En producción usar migraciones para control de cambios
-- Índice único en `email` para prevenir duplicados
+**Configuration:**
+- `synchronize: true` only in development (automatically creates tables)
+- Use migrations in production for change control
+- Unique index on `email` to prevent duplicates
 
-### Validación con Zod
+### Validation with Zod
 
-**Por qué Zod:**
-- Type inference automático (tipos TypeScript desde esquemas)
-- Mensajes de error claros
-- Composición de esquemas
-- Alternativa moderna a Joi/Yup
+**Why Zod:**
+- Automatic type inference (TypeScript types from schemas)
+- Clear error messages
+- Schema composition
+- Modern alternative to Joi/Yup
 
-## 🔄 Mejoras Futuras
+## 🔄 Future Improvements
 
-### Funcionalidades
+### Features
 
-- [ ] **Refresh tokens** - Renovar tokens sin re-login
-- [ ] **Roles y permisos** - Admin, user, guest
-- [ ] **Recuperación de contraseña** - Reset via email
-- [ ] **Verificación de email** - Confirmar cuenta
-- [ ] **Paginación** - Para lista de usuarios
-- [ ] **Búsqueda y filtros** - En lista de usuarios
-- [ ] **Avatar de usuario** - Subida de imágenes
-- [ ] **Soft delete** - Desactivar usuarios en lugar de eliminar
-- [ ] **Auditoría** - Log de cambios importantes
+- [ ] **Refresh tokens** - Renew tokens without re-login
+- [ ] **Roles and permissions** - Admin, user, guest
+- [ ] **Password recovery** - Reset via email
+- [ ] **Email verification** - Confirm account
+- [ ] **Pagination** - For user list
+- [ ] **Search and filters** - In user list
+- [ ] **User avatar** - Image upload
+- [ ] **Soft delete** - Deactivate users instead of deleting
+- [ ] **Audit trail** - Log important changes
 
-### Técnicas
+### Technical
 
-- [ ] **Tests unitarios** - Jest para backend y frontend
-- [ ] **Tests de integración** - Supertest para API
-- [ ] **Tests E2E** - Playwright o Cypress
+- [ ] **Unit tests** - Jest for backend and frontend
+- [ ] **Integration tests** - Supertest for API
+- [ ] **E2E tests** - Playwright or Cypress
 - [ ] **CI/CD** - GitHub Actions
-- [ ] **Docker** - Containerización
-- [ ] **Rate limiting** - Prevenir abuso de API
-- [ ] **Logging** - Winston o Pino
-- [ ] **Monitoring** - Sentry para errores
-- [ ] **Migraciones** - Control de versiones de BD
-- [ ] **OpenAPI/Swagger** - Documentación interactiva
-- [ ] **Helmet.js** - Headers de seguridad adicionales
-- [ ] **Input sanitization** - Prevenir XSS
-- [ ] **CSRF protection** - Para cookies
+- [ ] **Docker** - Containerization
+- [ ] **Rate limiting** - Prevent API abuse
+- [ ] **Logging** - Winston or Pino
+- [ ] **Monitoring** - Sentry for errors
+- [ ] **Migrations** - Database version control
+- [ ] **OpenAPI/Swagger** - Interactive documentation
+- [ ] **Helmet.js** - Additional security headers
+- [ ] **Input sanitization** - Prevent XSS
+- [ ] **CSRF protection** - For cookies
 
 ### UX/UI
 
-- [ ] **Tema oscuro** - Dark mode
-- [ ] **Responsive mejorado** - Mobile-first
-- [ ] **Internacionalización** - i18n para múltiples idiomas
-- [ ] **Notificaciones toast** - Feedback visual
-- [ ] **Skeleton loaders** - Mejor UX de carga
-- [ ] **Validación en tiempo real** - Feedback inmediato
+- [ ] **Dark theme** - Dark mode
+- [ ] **Improved responsive** - Mobile-first
+- [ ] **Internationalization** - i18n for multiple languages
+- [ ] **Toast notifications** - Visual feedback
+- [ ] **Skeleton loaders** - Better loading UX
+- [ ] **Real-time validation** - Immediate feedback
 
 ## 🧪 Testing
 
-Actualmente no hay tests implementados. Para agregarlos:
+Currently no tests implemented. To add them:
 
 ### Backend
 
@@ -516,43 +516,42 @@ cd frontend
 npm install --save-dev vitest @testing-library/react @testing-library/jest-dom
 ```
 
-## 🚢 Deploy
+## 🚢 Deployment
 
 ### Backend
 
-Recomendaciones:
-- **Railway** - Fácil deploy con PostgreSQL incluido
-- **Heroku** - Con addon de PostgreSQL
-- **DigitalOcean App Platform** - Configuración simple
-- **AWS/GCP/Azure** - Para producción enterprise
+Recommendations:
+- **Railway** - Easy deployment with PostgreSQL included
+- **Heroku** - With PostgreSQL addon
+- **DigitalOcean App Platform** - Simple configuration
+- **AWS/GCP/Azure** - For enterprise production
 
-Antes de deploy:
-1. Configurar variables de entorno
-2. Desactivar `synchronize` en TypeORM
-3. Ejecutar migraciones
-4. Configurar CORS con el dominio del frontend
+Before deployment:
+1. Configure environment variables
+2. Disable `synchronize` in TypeORM
+3. Run migrations
+4. Configure CORS with frontend domain
 
 ### Frontend
 
-Recomendaciones:
-- **Vercel** - Deploy automático desde Git
-- **Netlify** - Excelente para SPAs
-- **GitHub Pages** - Gratis para proyectos públicos
+Recommendations:
+- **Vercel** - Automatic deployment from Git
+- **Netlify** - Excellent for SPAs
+- **GitHub Pages** - Free for public projects
 
-Antes de deploy:
-1. Configurar `VITE_API_BASE_URL` con la URL del backend en producción
+Before deployment:
+1. Configure `VITE_API_BASE_URL` with production backend URL
 2. Build: `npm run build`
-3. El contenido de `dist/` es lo que se despliega
+3. Deploy the `dist/` folder content
 
-## 📝 Licencia
+## 📝 License
 
 MIT
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
-Proyecto desarrollado como prueba técnica para demostrar habilidades en desarrollo full-stack y comunicación asíncrona escrita.
+Project developed as a technical test to demonstrate full-stack development skills and asynchronous written communication.
 
 ---
 
 **AURA** - Augmented Universal Research Assistant
-

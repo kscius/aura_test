@@ -1,8 +1,8 @@
 # AURA Backend API
 
-API REST para gestión de usuarios con autenticación JWT, construida con Node.js, Express, TypeORM y PostgreSQL.
+REST API for user management with JWT authentication, built with Node.js, Express, TypeORM, and PostgreSQL.
 
-## 🚀 Tecnologías
+## 🚀 Technologies
 
 - **Node.js** v18+
 - **Express** v4.18
@@ -10,55 +10,55 @@ API REST para gestión de usuarios con autenticación JWT, construida con Node.j
 - **TypeORM** v0.3.17
 - **PostgreSQL**
 - **JWT** (jsonwebtoken)
-- **bcryptjs** - Hash de contraseñas
-- **Zod** - Validación de esquemas
-- **ts-node-dev** - Hot reload en desarrollo
+- **bcryptjs** - Password hashing
+- **Zod** - Schema validation
+- **ts-node-dev** - Hot reload in development
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 backend/
 ├── src/
-│   ├── controllers/       # Controladores de rutas
+│   ├── controllers/       # Route controllers
 │   │   ├── auth.controller.ts
 │   │   └── user.controller.ts
-│   ├── entities/          # Modelos TypeORM
+│   ├── entities/          # TypeORM models
 │   │   └── User.ts
-│   ├── middleware/        # Middlewares personalizados
+│   ├── middleware/        # Custom middlewares
 │   │   ├── auth.middleware.ts
 │   │   └── error.middleware.ts
-│   ├── routes/            # Definición de rutas
+│   ├── routes/            # Route definitions
 │   │   ├── auth.routes.ts
 │   │   └── user.routes.ts
-│   ├── services/          # Lógica de negocio
+│   ├── services/          # Business logic
 │   │   ├── auth.service.ts
 │   │   └── user.service.ts
-│   ├── types/             # Tipos TypeScript
+│   ├── types/             # TypeScript types
 │   │   └── express.d.ts
-│   ├── utils/             # Funciones auxiliares
+│   ├── utils/             # Utility functions
 │   │   ├── hash.ts
 │   │   └── jwt.ts
-│   ├── validation/        # Esquemas de validación
+│   ├── validation/        # Validation schemas
 │   │   └── auth.validation.ts
-│   ├── data-source.ts     # Configuración de TypeORM
-│   └── index.ts           # Punto de entrada
+│   ├── data-source.ts     # TypeORM configuration
+│   └── index.ts           # Entry point
 ├── package.json
 ├── tsconfig.json
 ├── env.example
 └── README.md
 ```
 
-## ⚙️ Instalación
+## ⚙️ Installation
 
-### 1. Instalar dependencias
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Configurar variables de entorno
+### 2. Configure environment variables
 
-Crear un archivo `.env` en la raíz del directorio `backend/`:
+Create a `.env` file in the `backend/` root directory:
 
 ```env
 # Server Configuration
@@ -69,54 +69,54 @@ NODE_ENV=development
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
-DB_PASSWORD=tu_contraseña
+DB_PASSWORD=your_password
 DB_NAME=aura_db
 
 # JWT Configuration
-JWT_SECRET=tu_secreto_super_seguro_cambialo_en_produccion
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
 JWT_EXPIRES_IN=7d
 ```
 
-### 3. Configurar Base de Datos
+### 3. Database Setup
 
-Asegúrate de tener PostgreSQL instalado y corriendo.
+Make sure PostgreSQL is installed and running.
 
-Crear la base de datos:
+Create the database:
 
 ```bash
-# Conectarse a PostgreSQL
+# Connect to PostgreSQL
 psql -U postgres
 
-# Crear la base de datos
+# Create database
 CREATE DATABASE aura_db;
 
-# Salir
+# Exit
 \q
 ```
 
-## 🏃 Ejecutar el Proyecto
+## 🏃 Running the Project
 
-### Modo Desarrollo (con hot reload)
+### Development Mode (with hot reload)
 
 ```bash
 npm run dev
 ```
 
-El servidor estará disponible en `http://localhost:3000`
+The server will be available at `http://localhost:3000`
 
-### Modo Producción
+### Production Mode
 
 ```bash
-# Compilar TypeScript a JavaScript
+# Compile TypeScript to JavaScript
 npm run build
 
-# Ejecutar el código compilado
+# Run compiled code
 npm start
 ```
 
-## 📊 Base de Datos
+## 📊 Database
 
-### Estructura de la Tabla Users
+### Users Table Structure
 
 ```sql
 CREATE TABLE users (
@@ -130,25 +130,25 @@ CREATE TABLE users (
 );
 ```
 
-### Migraciones
+### Migrations
 
-TypeORM está configurado con `synchronize: true` en desarrollo, lo que crea/actualiza las tablas automáticamente.
+TypeORM is configured with `synchronize: true` in development, which automatically creates/updates tables.
 
-**⚠️ IMPORTANTE:** En producción, desactivar `synchronize` y usar migraciones.
+**⚠️ IMPORTANT:** In production, disable `synchronize` and use migrations.
 
-Para generar una migración:
+To generate a migration:
 
 ```bash
 npm run migration:generate -- src/migrations/MigrationName
 ```
 
-Para ejecutar migraciones:
+To run migrations:
 
 ```bash
 npm run migration:run
 ```
 
-Para revertir la última migración:
+To revert the last migration:
 
 ```bash
 npm run migration:revert
@@ -156,48 +156,48 @@ npm run migration:revert
 
 ## 🔌 API Endpoints
 
-Consulta el archivo `README.md` principal para la documentación completa de la API.
+See the main `README.md` file for complete API documentation.
 
-### Resumen de Endpoints
+### Endpoints Summary
 
-| Método | Endpoint | Autenticación | Descripción |
-|--------|----------|---------------|-------------|
-| POST | `/api/auth/register` | No | Registrar nuevo usuario |
-| POST | `/api/auth/login` | No | Iniciar sesión |
-| GET | `/api/users/profile` | Sí | Obtener perfil actual |
-| PUT | `/api/users/profile` | Sí | Actualizar perfil |
-| GET | `/api/users` | Sí | Listar todos los usuarios |
+| Method | Endpoint | Authentication | Description |
+|--------|----------|----------------|-------------|
+| POST | `/api/auth/register` | No | Register new user |
+| POST | `/api/auth/login` | No | Log in |
+| GET | `/api/users/profile` | Yes | Get current profile |
+| PUT | `/api/users/profile` | Yes | Update profile |
+| GET | `/api/users` | Yes | List all users |
 | GET | `/health` | No | Health check |
 
-## 🔒 Seguridad
+## 🔒 Security
 
-### Autenticación JWT
+### JWT Authentication
 
-- Los tokens se firman con el secreto definido en `JWT_SECRET`
-- Expiración configurable (por defecto 7 días)
-- Los endpoints protegidos requieren el header: `Authorization: Bearer <token>`
+- Tokens are signed with the secret defined in `JWT_SECRET`
+- Configurable expiration (default 7 days)
+- Protected endpoints require the header: `Authorization: Bearer <token>`
 
-### Hashing de Contraseñas
+### Password Hashing
 
-- Uso de `bcryptjs` con 10 salt rounds
-- Las contraseñas nunca se almacenan en texto plano
-- Las contraseñas nunca se devuelven en las respuestas
+- Uses `bcryptjs` with 10 salt rounds
+- Passwords are never stored in plain text
+- Passwords are never returned in responses
 
-### Validación de Datos
+### Data Validation
 
-- Validación con Zod en todos los endpoints
-- Mensajes de error claros sin exponer información sensible
-- Prevención de SQL injection mediante consultas parametrizadas de TypeORM
+- Validation with Zod on all endpoints
+- Clear error messages without exposing sensitive information
+- SQL injection prevention through TypeORM parameterized queries
 
 ## 🧪 Testing
 
-Actualmente no hay tests implementados. Para agregar tests:
+Currently no tests implemented. To add tests:
 
 ```bash
 npm install --save-dev jest @types/jest ts-jest supertest @types/supertest
 ```
 
-Ejemplo de test para el endpoint de registro:
+Example test for the registration endpoint:
 
 ```typescript
 import request from 'supertest';
@@ -221,9 +221,9 @@ describe('POST /api/auth/register', () => {
 });
 ```
 
-## 🐛 Debug
+## 🐛 Debugging
 
-El servidor imprime información útil en la consola:
+The server prints useful information to the console:
 
 ```
 ✅ Database connection established
@@ -231,45 +231,45 @@ El servidor imprime información útil en la consola:
 📊 Environment: development
 ```
 
-Los errores se loguean con detalles completos en modo desarrollo.
+Errors are logged with full details in development mode.
 
-## 🚢 Deploy
+## 🚢 Deployment
 
-### Preparación para Producción
+### Production Preparation
 
-1. **Configurar variables de entorno en tu plataforma de hosting**
+1. **Configure environment variables on your hosting platform**
 
-2. **Desactivar synchronize en `data-source.ts`:**
+2. **Disable synchronize in `data-source.ts`:**
 
 ```typescript
-synchronize: false, // Cambiar a false en producción
+synchronize: false, // Change to false in production
 ```
 
-3. **Ejecutar migraciones:**
+3. **Run migrations:**
 
 ```bash
 npm run migration:run
 ```
 
-4. **Configurar CORS:**
+4. **Configure CORS:**
 
-En `src/index.ts`, configura CORS con el dominio de tu frontend:
+In `src/index.ts`, configure CORS with your frontend domain:
 
 ```typescript
 app.use(cors({
-  origin: 'https://tu-frontend.com',
+  origin: 'https://your-frontend.com',
   credentials: true
 }));
 ```
 
-### Plataformas Recomendadas
+### Recommended Platforms
 
-- **Railway** - Deploy fácil con PostgreSQL incluido
-- **Heroku** - Con addon de PostgreSQL
+- **Railway** - Easy deployment with PostgreSQL included
+- **Heroku** - With PostgreSQL addon
 - **DigitalOcean App Platform**
-- **AWS/GCP/Azure** - Para producción enterprise
+- **AWS/GCP/Azure** - For enterprise production
 
-## 📝 Scripts Disponibles
+## 📝 Available Scripts
 
 ```json
 {
@@ -287,33 +287,33 @@ app.use(cors({
 
 ### Error: "connect ECONNREFUSED"
 
-PostgreSQL no está corriendo. Iniciar el servicio:
+PostgreSQL is not running. Start the service:
 
 ```bash
-# En Windows
+# On Windows
 net start postgresql-x64-14
 
-# En macOS
+# On macOS
 brew services start postgresql
 
-# En Linux
+# On Linux
 sudo systemctl start postgresql
 ```
 
 ### Error: "relation 'users' does not exist"
 
-La tabla no fue creada. Verificar:
-1. `synchronize: true` en `data-source.ts` (solo desarrollo)
-2. Conexión a la base de datos correcta
-3. Ejecutar migraciones si estás en producción
+Table was not created. Check:
+1. `synchronize: true` in `data-source.ts` (development only)
+2. Correct database connection
+3. Run migrations if in production
 
 ### Error: "JWT malformed"
 
-Token inválido o mal formado. Verificar:
-1. El token se envía en el header: `Authorization: Bearer <token>`
-2. El `JWT_SECRET` es el mismo usado para crear el token
+Invalid or malformed token. Verify:
+1. Token is sent in header: `Authorization: Bearer <token>`
+2. `JWT_SECRET` is the same one used to create the token
 
-## 📚 Recursos
+## 📚 Resources
 
 - [Express Documentation](https://expressjs.com/)
 - [TypeORM Documentation](https://typeorm.io/)
@@ -322,5 +322,4 @@ Token inválido o mal formado. Verificar:
 
 ---
 
-Para más información, consulta el `README.md` principal del proyecto.
-
+For more information, see the main project `README.md`.
